@@ -30,12 +30,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         inputManager.RequestInput(value =>
         {
             PhotonNetwork.LocalPlayer.NickName = idText.text.Replace("_", "").Replace("\0", "").Trim();
-            PhotonNetwork.CreateRoom(value);
-            input.gameObject.SetActive(false);
             if (PhotonNetwork.IsConnected)
             {
                 connectionStatus.text = "방 생성 중..";
-                PhotonNetwork.JoinRandomRoom();
+                PhotonNetwork.CreateRoom(value);
+                input.gameObject.SetActive(false);
+       
             }
             else
             {

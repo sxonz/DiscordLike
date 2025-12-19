@@ -21,7 +21,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.IsMessageQueueRunning = true;
         scroll_rect = GameObject.FindObjectOfType<ScrollRect>();
-        channel.text = PhotonNetwork.CurrentRoom.ToStringFull();
+        channel.text = PhotonNetwork.CurrentRoom.Name;
     }
 
     void Update()
