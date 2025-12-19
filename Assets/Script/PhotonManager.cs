@@ -31,6 +31,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void Create()
     {
         input.gameObject.SetActive(true);
+        createBtn.interactable = false;
 
         inputManager.RequestInput(value =>
         {
@@ -50,6 +51,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         },
         () =>
         {
+            createBtn.interactable = true;
             input.gameObject.SetActive(false);
         });
     }
