@@ -13,14 +13,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI connectionStatus;
     public TextMeshProUGUI idText;
     public Button loginBtn;
+    public Button createBtn;
     public TMP_InputField inputField;
     public GameObject input;
     public InputManager inputManager;
+
+    [SerializeField]
+    private Dictionary<string, RoomInfo> roomList = new Dictionary<string, RoomInfo>();
 
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
         loginBtn.interactable = false;
+        createBtn.interactable = false;
         connectionStatus.text = "연결 중..";
     }
     public void Create()
@@ -61,6 +66,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LocalPlayer.NickName = cleanedInput;
             loginBtn.interactable = false;
+            createBtn.interactable = false;
 
             if (PhotonNetwork.IsConnected)
             {
@@ -77,12 +83,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        loginBtn.interactable = true;
+        createBtn.interactable = true;
         connectionStatus.text = "연결됨";
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
         loginBtn.interactable = false;
+        createBtn.interactable = false;
         connectionStatus.text = "(오프라인) 연결 실패\n재시도 중..";
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -94,7 +101,33 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        connectionStatus.text = "참가 성공";
+        connectionStatus.text = "접속 완료";
         PhotonNetwork.LoadLevel(1);
+    }
+    public override void OnRoomListUpdate(List<RoomInfo> roomInfos)
+    {
+        foreach (RoomInfo info in roomInfos)
+        {
+            if (info.RemovedFromList || info.PlayerCount == 0)
+            {
+                roomList.Remove(info.Name);
+            }
+            else
+            {
+                roomList[info.Name] = info;
+            }
+        }
+
+        UpdateLoginButton();
+    }
+    void UpdateLoginButton()
+    {
+        bool hasRoom = roomList.Count > 0;
+
+        loginBtn.interactable = hasRoom;
+        createBtn.interactable = PhotonNetwork.IsConnected;
+
+        if (!hasRoom)
+            connectionStatus.text = "생성된 방 없음";
     }
 }
