@@ -17,6 +17,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public TMP_InputField inputField;
     public GameObject input;
     public InputManager inputManager;
+    public GameObject roomListPanel;
+    public Transform roomListContent;
+    public GameObject roomItemPrefab;
 
     [SerializeField]
     private Dictionary<string, RoomInfo> roomList = new Dictionary<string, RoomInfo>();
@@ -83,6 +86,42 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void OpenRoomList()
+    {
+        roomListPanel.SetActive(true);
+        RefreshRoomListUI();
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomInfos)
+    {
+        foreach (RoomInfo info in roomInfos)
+        {
+            if (info.RemovedFromList)
+            {
+                roomList.Remove(info.Name);
+            }
+            else
+            {
+                roomList[info.Name] = info;
+            }
+        }
+
+        RefreshRoomListUI();
+    }
+
+    void RefreshRoomListUI()
+    {
+        foreach (Transform child in roomListContent)
+            Destroy(child.gameObject);
+
+        foreach (RoomInfo room in roomList.Values)
+        {
+            GameObject item = Instantiate(roomItemPrefab, roomListContent);
+            RoomItemUI ui = item.GetComponent<RoomItemUI>();
+
+            ui.SetRoom(room);
+        }
+    }
     public override void OnConnectedToMaster()
     {
         createBtn.interactable = true;
@@ -103,24 +142,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        connectionStatus.text = "접속 완료";
+        roomListPanel.SetActive(false);
+        connectionStatus.text = "방 참가 성공";
         PhotonNetwork.LoadLevel(1);
-    }
-    public override void OnRoomListUpdate(List<RoomInfo> roomInfos)
-    {
-        foreach (RoomInfo info in roomInfos)
-        {
-            if (info.RemovedFromList || info.PlayerCount == 0)
-            {
-                roomList.Remove(info.Name);
-            }
-            else
-            {
-                roomList[info.Name] = info;
-            }
-        }
-
-        UpdateLoginButton();
     }
     void UpdateLoginButton()
     {
