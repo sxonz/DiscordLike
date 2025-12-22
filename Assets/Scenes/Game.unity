@@ -554,8 +554,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6565181014227342702, guid: e518b166636a60946bb8918c11b1b088, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1452,7 +1451,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1663,14 +1662,14 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -2868545011954996619, guid: 34b7730caa1dc044ca1f926ad13f7217, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 9
     m_Data: {fileID: 3884990070072379635, guid: 34b7730caa1dc044ca1f926ad13f7217, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -2868545011954996619, guid: 34b7730caa1dc044ca1f926ad13f7217, type: 3}
   - m_RefCount: 38
     m_Data: {fileID: -2682232980240601156, guid: 34b7730caa1dc044ca1f926ad13f7217, type: 3}
   - m_RefCount: 19
@@ -9986,66 +9985,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &5647145271224524582
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1409706667929683785, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_Name
-      value: purple_character_0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958650226799460568, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1409706667929683785, guid: e518b166636a60946bb8918c11b1b088, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 886207124}
-  m_SourcePrefab: {fileID: 100100000, guid: e518b166636a60946bb8918c11b1b088, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
