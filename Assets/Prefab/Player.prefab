@@ -162,8 +162,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.225
+  m_Offset: {x: -0.019949228, y: 0}
+  m_Radius: 0.46627834
 --- !u!114 &2514047850663978910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75d79ba0a2c3b0438cdc3c6804aa5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHand: {fileID: 2682755088386066381}
+  weaponHolder: {fileID: 7876261705670947610}
 --- !u!50 &8282007561830137740
 Rigidbody2D:
   serializedVersion: 5

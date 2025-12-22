@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemPick : MonoBehaviour
 {
-    public Transform rightHand;
+    public WeaponHolder weaponHolder;
 
     Collider2D currentWeaponCol;
 
@@ -38,14 +38,7 @@ public class ItemPick : MonoBehaviour
 
     void PickWeapon(GameObject weapon)
     {
-        Debug.Log("Pick Weapon!");
-
-        State state = weapon.GetComponent<State>();
-        state.isDropped = false;
-
-        weapon.transform.SetParent(rightHand);
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        weaponHolder.EquipWeapon(weapon);
 
         Collider2D col = weapon.GetComponent<Collider2D>();
         if (col != null) col.enabled = false;

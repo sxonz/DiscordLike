@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
@@ -8,7 +8,6 @@ public class WeaponHolder : MonoBehaviour
     private Weapon leftWeapon;
     private Weapon rightWeapon;
 
-    // ø‹∫Œ(ItemPick)ø°º≠ »£√‚
     public bool EquipWeapon(GameObject weaponObj)
     {
         Weapon weapon = weaponObj.GetComponent<Weapon>();
@@ -29,39 +28,17 @@ public class WeaponHolder : MonoBehaviour
         }
         else
         {
-            // µŒ º’ ¥Ÿ ¬˜¿÷¿Ω
             return false;
         }
 
         state.isDropped = false;
         return true;
     }
-
     void AttachWeapon(GameObject weapon, Transform hand)
     {
-        weapon.transform.SetParent(hand);
+        weapon.transform.SetParent(hand, false);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
-
-        Collider2D col = weapon.GetComponent<Collider2D>();
-        if (col) col.enabled = false;
-
-        Rigidbody2D rb = weapon.GetComponent<Rigidbody2D>();
-        if (rb) rb.simulated = false;
-    }
-
-    void Update()
-    {
-        // ¡¬≈¨∏Ø °Ê øﬁº’
-        if (Input.GetMouseButtonDown(0) && leftWeapon != null)
-        {
-            leftWeapon.Attack();
-        }
-
-        // øÏ≈¨∏Ø °Ê ø¿∏•º’
-        if (Input.GetMouseButtonDown(1) && rightWeapon != null)
-        {
-            rightWeapon.Attack();
-        }
+        // scale Í±¥Îì§ÏßÄ ÏïäÏùå
     }
 }
