@@ -72,6 +72,10 @@ public class ChatManager : MonoBehaviourPunCallbacks
         }
         playerList.text = players;
     }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        ReceiveMsg($"이제 이전 방장은 죽고 <color=yellow>[{newMasterClient.NickName}]의 시대가 되었다.</color>");
+    }
 
     public void GameStart()
     {
