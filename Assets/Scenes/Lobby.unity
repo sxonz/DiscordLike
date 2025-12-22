@@ -299,7 +299,7 @@ RectTransform:
   m_GameObject: {fileID: 120471484}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_LocalScale: {x: 0.55920637, y: 0.55920637, z: 0.55920637}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 64962200}
@@ -312,7 +312,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1280, y: 720}
+  m_AnchoredPosition: {x: 492.64285, y: 251.64285}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120471486
@@ -1263,9 +1263,9 @@ MonoBehaviour:
   inputField: {fileID: 1249531345}
   input: {fileID: 1303272513}
   inputManager: {fileID: 1318544042}
-  roomListPanel: {fileID: 0}
-  roomListContent: {fileID: 0}
-  roomItemPrefab: {fileID: 0}
+  roomListPanel: {fileID: 1476252057}
+  roomListContent: {fileID: 1236968581}
+  roomItemPrefab: {fileID: 2694948225094569, guid: 76c8fafbdf69b924091ad96607cd46c7, type: 3}
 --- !u!4 &608609105
 Transform:
   m_ObjectHideFlags: 0
