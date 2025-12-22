@@ -153,6 +153,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         createBtn.interactable = PhotonNetwork.IsConnected;
 
         if (!hasRoom)
-            connectionStatus.text = "생성된 방 없음";
+            connectionStatus.text = "대기 중";
     }
 }
