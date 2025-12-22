@@ -1,44 +1,40 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // New Input System ³×ÀÓ½ºÆäÀÌ½º
 
-public class Move : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerMove : MonoBehaviour
 {
-    [Header("ÀÌµ¿ ¼³Á¤")]
-    [SerializeField] private float moveSpeed = 5f;
+    [Header("ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField] private float moveSpeed = 10.0f;
+    [SerializeField] private float drag = 5.0f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
-    private Vector2 moveInput;
     private Rigidbody rb;
 
     void Awake()
     {
-        // ¹°¸® ±â¹Ý ÀÌµ¿À» À§ÇØ Rigidbody ÂüÁ¶ (¾øÀ¸¸é ÀÚµ¿À¸·Î Ãß°¡ ±ÇÀå)
         rb = GetComponent<Rigidbody>();
 
-        // ¸¸¾à Rigidbody°¡ ¾ø´Ù¸é ¿¡·¯ ¹æÁö¸¦ À§ÇØ Ã¼Å©
-        if (rb == null)
-        {
-            Debug.LogError("GameObject¿¡ Rigidbody ÄÄÆ÷³ÍÆ®°¡ ÇÊ¿äÇÕ´Ï´Ù!");
-        }
-    }
-
-    // Input SystemÀÇ 'OnMove' ¸Þ½ÃÁö ¼ö½Å (Player Input ÄÄÆ÷³ÍÆ® ¼³Á¤ ÇÊ¿ä)
-    public void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
+        rb.linearDamping = drag;
+        rb.useGravity = true;
+        rb.freezeRotation = true; // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        rb.interpolation = RigidbodyInterpolation.Interpolate; // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     void FixedUpdate()
     {
-        // ¹°¸® ¿¬»êÀº FixedUpdate¿¡¼­ Ã³¸®ÇÏ´Â °ÍÀÌ °¡Àå ºÎµå·´½À´Ï´Ù.
-        MovePlayer();
-    }
+        // 1. ï¿½Ô·ï¿½ ï¿½Þ±ï¿½ (Input Manager ï¿½ï¿½ï¿½)
+        // GetAxisï¿½ï¿½ -1.0ï¿½ï¿½ï¿½ï¿½ 1.0 ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ (ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½)
+        float h = Input.GetAxis("Horizontal"); // A, D
+        float v = Input.GetAxis("Vertical");   // W, S
 
-    void MovePlayer()
-    {
-        // ÀÔ·Â¹ÞÀº ¹æÇâÀ¸·Î ¼Óµµ °è»ê
-        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        // 2. ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        Vector3 moveDir = new Vector3(h, 0, v).normalized;
 
-        // Rigidbody¸¦ ÀÌ¿ëÇÑ ¹°¸® ÀÌµ¿ (¶³¸² Çö»ó ¹æÁö)
-        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        // 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ (Velocityï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Çµå¸®ï¿½ï¿½ ï¿½Íºï¿½ï¿½ï¿½ ï¿½Îµå·¯ï¿½ï¿½)
+        // Time.fixedDeltaTimeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (moveDir.magnitude > 0.1f)
+        {
+            rb.AddForce(moveDir * moveSpeed * 10f, ForceMode.Force);
+        }
     }
 }
