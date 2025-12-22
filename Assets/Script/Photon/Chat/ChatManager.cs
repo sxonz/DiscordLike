@@ -58,6 +58,10 @@ public class ChatManager : MonoBehaviourPunCallbacks
             StartCoroutine(Send(msg));
 
     }
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel(0); 
+    }
 
     void ChatterUpdate()
     {
