@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +29,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         loginBtn.interactable = false;
         createBtn.interactable = false;
-        connectionStatus.text = "¿¬°á Áß..";
+        connectionStatus.text = "ì—°ê²° ì¤‘..";
     }
     public void Create()
     {
@@ -41,14 +41,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = idText.text.Replace("_", "").Replace("\0", "").Trim();
             if (PhotonNetwork.IsConnected)
             {
-                connectionStatus.text = "¹æ »ı¼º Áß..";
+                connectionStatus.text = "ë°© ìƒì„± ì¤‘..";
                 PhotonNetwork.CreateRoom(value);
                 input.gameObject.SetActive(false);
 
             }
             else
             {
-                connectionStatus.text = "(¿ÀÇÁ¶óÀÎ) ¿¬°á ½ÇÆĞ\nÀç½Ãµµ Áß..";
+                connectionStatus.text = "(ì˜¤í”„ë¼ì¸) ì—°ê²° ì‹¤íŒ¨\nì¬ì‹œë„ ì¤‘..";
                 PhotonNetwork.ConnectUsingSettings();
             }
         },
@@ -64,27 +64,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         if (cleanedInput.Equals(""))
         {
-            Debug.Log("³Í ³ª°¡¶ó");
+            Debug.Log("ë‹‰ë„¤ì„ ì…ë ¥ ì•ˆ ë¨");
             return;
+        }
+
+        PhotonNetwork.LocalPlayer.NickName = cleanedInput;
+        loginBtn.interactable = false;
+        createBtn.interactable = false;
+
+        if (PhotonNetwork.IsConnected)
+        {
+            connectionStatus.text = "ë°© ëª©ë¡ ë¶ˆëŸ¬ì˜¤ëŠ” ì¤‘..";
+            OpenRoomList();   // â­ ì—¬ê¸°ì„œ íŒ¨ë„ ì—´ê¸°
         }
         else
         {
-            PhotonNetwork.LocalPlayer.NickName = cleanedInput;
-            loginBtn.interactable = false;
-            createBtn.interactable = false;
-
-            if (PhotonNetwork.IsConnected)
-            {
-                connectionStatus.text = "¹æ ÀÔÀå Áß..";
-                PhotonNetwork.JoinRandomRoom();
-            }
-            else
-            {
-                connectionStatus.text = "(¿ÀÇÁ¶óÀÎ) ¿¬°á ½ÇÆĞ\nÀç½Ãµµ Áß..";
-                PhotonNetwork.ConnectUsingSettings();
-            }
+            connectionStatus.text = "(ì˜¤í”„ë¼ì¸) ì—°ê²° ì‹¤íŒ¨\nì¬ì‹œë„ ì¤‘..";
+            PhotonNetwork.ConnectUsingSettings();
         }
     }
+
 
     public void OpenRoomList()
     {
@@ -97,16 +96,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (RoomInfo info in roomInfos)
         {
             if (info.RemovedFromList)
-            {
                 roomList.Remove(info.Name);
-            }
             else
-            {
                 roomList[info.Name] = info;
-            }
         }
 
         RefreshRoomListUI();
+        UpdateLoginButton();
     }
 
     void RefreshRoomListUI()
@@ -124,26 +120,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
+        PhotonNetwork.JoinLobby();
         createBtn.interactable = true;
-        connectionStatus.text = "¿¬°áµÊ";
+        connectionStatus.text = "ë¡œë¹„ ì ‘ì† ì¤‘..";
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
         loginBtn.interactable = false;
         createBtn.interactable = false;
-        connectionStatus.text = "(¿ÀÇÁ¶óÀÎ) ¿¬°á ½ÇÆĞ\nÀç½Ãµµ Áß..";
+        connectionStatus.text = "(ì˜¤í”„ë¼ì¸) ì—°ê²° ì‹¤íŒ¨\nì¬ì‹œë„ ì¤‘..";
         PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        connectionStatus.text = "»õ ¹æ »ı¼º Áß..";
+        connectionStatus.text = "ìƒˆ ë°© ìƒì„± ì¤‘..";
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8 });
     }
 
     public override void OnJoinedRoom()
     {
         roomListPanel.SetActive(false);
-        connectionStatus.text = "¹æ Âü°¡ ¼º°ø";
+        connectionStatus.text = "ë°© ì°¸ê°€ ì„±ê³µ";
         PhotonNetwork.LoadLevel(1);
     }
     void UpdateLoginButton()
@@ -154,6 +151,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         createBtn.interactable = PhotonNetwork.IsConnected;
 
         if (!hasRoom)
-            connectionStatus.text = "»ı¼ºµÈ ¹æ ¾øÀ½";
+            connectionStatus.text = "ìƒì„±ëœ ë°© ì—†ìŒ";
     }
 }
