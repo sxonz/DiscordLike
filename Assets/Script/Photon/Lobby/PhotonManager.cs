@@ -122,6 +122,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
         createBtn.interactable = true;
         connectionStatus.text = "로비 접속 중..";
     }
