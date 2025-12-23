@@ -5,6 +5,9 @@ public class PlayerAim : MonoBehaviour
     public Transform leftHand;
     public Transform rightHand;
 
+    int hp = 3;
+    int damage = 1;
+
     Camera cam;
 
     void Start()

@@ -10,16 +10,16 @@ public class WeaponHolder : MonoBehaviour
 
     void Update()
     {
-        // 좌클릭 → 왼손 공격
+        // 좌클릭 → 왼손 무기 특수 공격
         if (Input.GetMouseButtonDown(0) && leftWeapon != null)
         {
-            leftWeapon.Attack(true);
+            leftWeapon.SpecialAttack();
         }
 
-        // 우클릭 → 오른손 공격
+        // 우클릭 → 오른손 무기 특수 공격
         if (Input.GetMouseButtonDown(1) && rightWeapon != null)
         {
-            rightWeapon.Attack(false);
+            rightWeapon.SpecialAttack();
         }
     }
 

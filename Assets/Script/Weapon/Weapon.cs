@@ -3,23 +3,24 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour
 {
-    public float attackAngle = 90f;     // 휘두르는 각도
-    public float attackDuration = 0.15f; // 공격 시간
+    public float attackAngle = 90f;
+    public float attackDuration = 0.15f;
 
-    bool isAttacking = false;
+    protected bool isAttacking = false;
 
-    public void Attack(bool isLeftHand)
+    // 기본 공격 (근접 회전)
+    public virtual void Attack(bool isLeftHand)
     {
         if (isAttacking) return;
         StartCoroutine(AttackCoroutine(isLeftHand));
     }
 
-    IEnumerator AttackCoroutine(bool isLeftHand)
+    protected IEnumerator AttackCoroutine(bool isLeftHand)
     {
         isAttacking = true;
 
         float elapsed = 0f;
-        float direction = isLeftHand ? 1f : -1f; // 왼손 / 오른손 방향 반전
+        float direction = isLeftHand ? 1f : -1f;
 
         Quaternion startRot = transform.localRotation;
         Quaternion endRot =
@@ -37,8 +38,13 @@ public class Weapon : MonoBehaviour
             yield return null;
         }
 
-        // 원래 각도로 복귀
         transform.localRotation = startRot;
         isAttacking = false;
+    }
+
+    // 특수 공격 (무기마다 다르게)
+    public virtual void SpecialAttack()
+    {
+        Debug.Log($"{name} 특수 공격 (기본)");
     }
 }
