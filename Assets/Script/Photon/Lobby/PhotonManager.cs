@@ -42,7 +42,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsConnected)
             {
                 connectionStatus.text = "방 생성 중..";
-                PhotonNetwork.CreateRoom(value);
+                PhotonNetwork.CreateRoom(value, new RoomOptions { MaxPlayers=6});
+                PhotonNetwork.AutomaticallySyncScene = true;
                 input.gameObject.SetActive(false);
 
             }
@@ -135,6 +136,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         connectionStatus.text = "새 방 생성 중..";
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8 });
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedRoom()
@@ -151,6 +153,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         createBtn.interactable = PhotonNetwork.IsConnected;
 
         if (!hasRoom)
-            connectionStatus.text = "생성된 방 없음";
+            connectionStatus.text = "대기 중";
     }
 }
