@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
+    Camera cam;
     public Transform leftHand;
     public Transform rightHand;
-
-    int hp = 3;
-    int damage = 1;
-
-    Camera cam;
 
     void Start()
     {
         cam = Camera.main;
+        transform.position = (leftHand.position + rightHand.position) / 2f;
+
     }
 
     void Update()
@@ -22,9 +20,7 @@ public class PlayerAim : MonoBehaviour
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Quaternion rot = Quaternion.Euler(0, 0, angle - 90f);
-
-        leftHand.rotation = rot;
-        rightHand.rotation = rot;
+        // offset¸¸ È¸Àü
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
 }

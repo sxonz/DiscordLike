@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class Bow : MonoBehaviour
+public class Bow : Weapon
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject arrowPrefab;
+    public Transform firePoint;
+    public float arrowSpeed = 12f;
 
-    // Update is called once per frame
-    void Update()
+    public override void SpecialAttack()
     {
-        
+        GameObject arrow = Instantiate(
+            arrowPrefab,
+            firePoint.position,
+            firePoint.rotation
+        );
+
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = firePoint.up * arrowSpeed;
+        }
+
+        Debug.Log("Ȱ Ư�� ����: ȭ�� �߻�!");
     }
 }
