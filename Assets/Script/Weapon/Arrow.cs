@@ -14,28 +14,33 @@ public class Arrow : MonoBehaviour
     {
         if (isStuck) return;
 
-        // 🔹 벽에 닿으면 꽃힘
         if (collision.gameObject.CompareTag("Wall"))
         {
-            Stick();
+            Debug.Log("화살이 벽에 꽃힘");
+            StickAndDisappear();
         }
 
-        // 🔹 플레이어 맞으면 (일단 로그)
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("플레이어 맞음");
-            Stick();
+            StickAndDisappear();
         }
     }
 
-    void Stick()
+    void StickAndDisappear()
     {
         isStuck = true;
 
+        // 이동 정지
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = false;
 
+        // 충돌 끄기
         GetComponent<Collider2D>().enabled = false;
+
+        // 1.5초 후 사라짐
+        Debug.Log("화살 1.5초 후 제거");
+        Destroy(gameObject, 1.5f);
     }
 }

@@ -8,9 +8,6 @@ public class Bow : Weapon
 
     public override void SpecialAttack()
     {
-        if (arrowPrefab == null || firePoint == null)
-            return;
-
         GameObject arrow = Instantiate(
             arrowPrefab,
             firePoint.position,
@@ -19,8 +16,7 @@ public class Bow : Weapon
 
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         if (rb != null)
-        {
-            rb.velocity = firePoint.up * arrowSpeed;
-        }
+            rb.linearVelocity = firePoint.up * arrowSpeed;
     }
+
 }

@@ -56,6 +56,6 @@ public class WeaponHolder : MonoBehaviour
         weapon.transform.localRotation = Quaternion.identity;
         // scale 건들지 않음
 
-        weapon.transform.localRotation = Quaternion.Euler(0, 0, -45);
+        weapon.transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 }
