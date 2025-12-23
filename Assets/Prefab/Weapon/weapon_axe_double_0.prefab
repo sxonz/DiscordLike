@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5252092060933048501}
   - component: {fileID: 5363970793523697545}
   - component: {fileID: 5996396907919529181}
+  - component: {fileID: -4930585557680538568}
   m_Layer: 0
   m_Name: weapon_axe_double_0
   m_TagString: weapon
@@ -161,3 +162,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662461f07d4db854da1800c7a4384b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackAngle: 90
+  attackDuration: 0.15
+--- !u!50 &-4930585557680538568
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8557251133664582755}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
