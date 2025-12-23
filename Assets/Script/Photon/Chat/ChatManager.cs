@@ -5,6 +5,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 using System;
+using ExitGames.Client.Photon;
 
 public class ChatManager : MonoBehaviourPunCallbacks
 {
@@ -58,16 +59,35 @@ public class ChatManager : MonoBehaviourPunCallbacks
             StartCoroutine(Send(msg));
 
     }
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel(0); 
+    }
 
     void ChatterUpdate()
     {
         players = "참가자 목록\n";
+
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            players += p.NickName + "\n";
+            bool isReady = false;
+
+            if (p.CustomProperties.ContainsKey("IsReady"))
+                isReady = (bool)p.CustomProperties["IsReady"];
+
+            if (isReady)
+                players += $"<color=#00ff00>{p.NickName}</color>\n";
+            else
+                players += p.NickName + "\n";
         }
+
         playerList.text = players;
     }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        ReceiveMsg($"이제 이전 방장은 죽고 <color=yellow>[{newMasterClient.NickName}]의 시대가 되었다.</color>");
+    }
+
 
     public void GameStart()
     {
@@ -92,6 +112,19 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string msg = string.Format("<color=#ff0000>[{0}]님이 {1}에 사망하셨습니다.</color>", otherPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
         ReceiveMsg(msg);
     }
+    public void ToggleReady()
+    {
+        bool isReady = false;
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("IsReady"))
+            isReady = (bool)PhotonNetwork.LocalPlayer.CustomProperties["IsReady"];
+
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+        props["IsReady"] = !isReady;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
 
     [PunRPC]
     public void ReceiveMsg(string msg)
