@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerAim : MonoBehaviour
+public class PlayerAim : MonoBehaviourPun
 {
     Camera cam;
 
@@ -11,6 +12,7 @@ public class PlayerAim : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) return;
         Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = mousePos - (Vector2)transform.position;
 
