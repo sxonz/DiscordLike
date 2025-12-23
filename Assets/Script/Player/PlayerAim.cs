@@ -18,8 +18,6 @@ public class PlayerAim : MonoBehaviourPun
         Vector2 dir = mousePos - (Vector2)transform.position;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
-        Debug.Log(angle + angleOffset);
         transform.rotation = Quaternion.Euler(0f, 0f, angle + angleOffset);
     }
 }
