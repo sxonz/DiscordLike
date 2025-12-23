@@ -8,6 +8,21 @@ public class WeaponHolder : MonoBehaviour
     private Weapon leftWeapon;
     private Weapon rightWeapon;
 
+    void Update()
+    {
+        // 좌클릭 → 왼손 공격
+        if (Input.GetMouseButtonDown(0) && leftWeapon != null)
+        {
+            leftWeapon.Attack(true);
+        }
+
+        // 우클릭 → 오른손 공격
+        if (Input.GetMouseButtonDown(1) && rightWeapon != null)
+        {
+            rightWeapon.Attack(false);
+        }
+    }
+
     public bool EquipWeapon(GameObject weaponObj)
     {
         Weapon weapon = weaponObj.GetComponent<Weapon>();
