@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 2931653262337383839}
   - component: {fileID: 6458023293560082974}
   - component: {fileID: 8772259778711218567}
-  - component: {fileID: 3905371080404489908}
   - component: {fileID: -3516333031543904880}
   m_Layer: 0
   m_Name: weapon_bow_0
@@ -182,20 +181,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.6, y: 0.19}
   m_EdgeRadius: 0
---- !u!114 &3905371080404489908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6992921437063518828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662461f07d4db854da1800c7a4384b87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackAngle: 90
-  attackDuration: 0.15
 --- !u!114 &-3516333031543904880
 MonoBehaviour:
   m_ObjectHideFlags: 0
