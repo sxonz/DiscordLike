@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 6458023293560082974}
   - component: {fileID: 8772259778711218567}
   - component: {fileID: -3516333031543904880}
+  - component: {fileID: 6138230924478692988}
   m_Layer: 0
   m_Name: weapon_bow_0
   m_TagString: weapon
@@ -195,6 +196,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackAngle: 90
   attackDuration: 0.15
-  arrowPrefab: {fileID: 4830049309674214627, guid: 5c5aec439aa64ef4fa745930e4edaf62, type: 3}
+  arrowPrefabName: Arrow
   firePoint: {fileID: 5379635286738332164}
   arrowSpeed: 12
+--- !u!114 &6138230924478692988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992921437063518828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

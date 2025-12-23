@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class Move : MonoBehaviour
+public class Move : MonoBehaviourPun
 {
     public float moveSpeed = 3f;
 
@@ -15,6 +16,7 @@ public class Move : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) return;
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
