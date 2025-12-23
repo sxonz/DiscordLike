@@ -1,34 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
-    public static GameManager instance;
-    public static GameManager Instance
-    {
-        get
-        {
-            if (!instance)
-            {
-                instance = FindObjectOfType(typeof(GameManager)) as GameManager;
-                if (instance == null) Debug.Log("ΩÃ±€≈Ê ø¿∫Í¡ß∆Æ æ¯¿Ω");
-            }
-            return instance;
-        }
-    }
-
-    void Awake()
-    {
-        if (instance == null) instance = this;
-        else if (instance != this) Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void Update()
+    void Start()
     {
         Screen.SetResolution(1600, 900, false);
+
+        SpawnPlayer();
+    }
+
+    void SpawnPlayer()
+    {
+        Vector3 spawnPos = new Vector3(
+            Random.Range(-4f, 4f),
+            Random.Range(-2f, 2f),
+            0
+        );
+
+        PhotonNetwork.Instantiate(
+            "Player", 
+            spawnPos,
+            Quaternion.identity
+        );
     }
 }
