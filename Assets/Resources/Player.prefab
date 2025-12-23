@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5080002102691189423}
   - component: {fileID: 5686606424897652650}
+  - component: {fileID: 2631487255396736098}
+  - component: {fileID: 2653556966539695501}
   m_Layer: 0
   m_Name: offset
   m_TagString: Untagged
@@ -46,6 +48,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445b392840a7184aba5570f7cbabbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angleOffset: -45
+--- !u!114 &2631487255396736098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636941946118180356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2653556966539695501}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2653556966539695501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636941946118180356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1409706667929683785
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f3942e77e6a2c4eb13c65d5fa2952c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angleOffset: -90
 --- !u!1 &4830208315634763853
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,3 +777,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f3942e77e6a2c4eb13c65d5fa2952c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angleOffset: -90

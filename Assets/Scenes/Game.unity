@@ -562,6 +562,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6138230924478692988, guid: c5df8854822960841aae6d45de4214f6, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6992921437063518828, guid: c5df8854822960841aae6d45de4214f6, type: 3}
       propertyPath: m_Name
       value: weapon_bow_0
@@ -830,6 +834,10 @@ PrefabInstance:
     - target: {fileID: 1101678889018518099, guid: 98f9533bcc106084d95992f2a6b2422a, type: 3}
       propertyPath: m_Name
       value: weapon_axe_0 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928963610944951566, guid: 98f9533bcc106084d95992f2a6b2422a, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4822860684316469313, guid: 98f9533bcc106084d95992f2a6b2422a, type: 3}
       propertyPath: m_SortingOrder
@@ -15125,6 +15133,10 @@ PrefabInstance:
     - target: {fileID: 8557251133664582755, guid: b4100d053d46f5747b9eb1429d62440a, type: 3}
       propertyPath: m_Name
       value: weapon_axe_double_0 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885744998670946679, guid: b4100d053d46f5747b9eb1429d62440a, type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
