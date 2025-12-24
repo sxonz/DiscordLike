@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
+using DG.Tweening; // [추가] DOTween 사용
 
 public class Arrow : MonoBehaviour
 {
@@ -7,9 +9,12 @@ public class Arrow : MonoBehaviour
 
     public float damage = 2;
 
+    PhotonView pv; // [추가] 오너 체크용
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        pv = GetComponent<PhotonView>(); // [추가]
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -41,9 +46,15 @@ public class Arrow : MonoBehaviour
         // 충돌 끄기
         GetComponent<Collider2D>().enabled = false;
 
-        // 1.5초 후 사라짐
+        // 1.5초 후 사라짐 (DOTween 사용)
         Debug.Log("화살 1.5초 후 제거");
-        Destroy(gameObject, 1.5f);
+
+        if (!pv.IsMine) return; // [추가] 오너만 삭제
+
+        DOVirtual.DelayedCall(1.5f, () => // [추가]
+        {
+            PhotonNetwork.Destroy(gameObject); // [수정] 지연 삭제
+        });
     }
 
     void OnPlayerHit(GameObject player)
@@ -52,6 +63,13 @@ public class Arrow : MonoBehaviour
         playerState.Hit(damage);
 
         Debug.Log("화살 바로 제거");
-        Destroy(gameObject);
+
+        if (!pv.IsMine) return; // [추가] 오너만 삭제
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        DOTween.Kill(gameObject); // [추가] 트윈 정리 (에러 방지)
     }
 }
