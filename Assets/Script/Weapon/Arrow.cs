@@ -5,6 +5,8 @@ public class Arrow : MonoBehaviour
     Rigidbody2D rb;
     bool isStuck = false;
 
+    public float damage = 2;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,7 +25,7 @@ public class Arrow : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("플레이어 맞음");
-            StickAndDisappear();
+            OnPlayerHit(collision.gameObject);
         }
     }
 
@@ -42,5 +44,14 @@ public class Arrow : MonoBehaviour
         // 1.5초 후 사라짐
         Debug.Log("화살 1.5초 후 제거");
         Destroy(gameObject, 1.5f);
+    }
+
+    void OnPlayerHit(GameObject player)
+    {
+        PlayerState playerState = player.GetComponent<PlayerState>();
+        playerState.Hit(damage);
+
+        Debug.Log("화살 바로 제거");
+        Destroy(gameObject);
     }
 }

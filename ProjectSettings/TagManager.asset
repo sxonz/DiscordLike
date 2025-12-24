@@ -6,6 +6,7 @@ TagManager:
   tags:
   - weapon
   - Wall
+  - Arrow
   layers:
   - Default
   - TransparentFX
