@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 7876261705670947610}
   - component: {fileID: -8359098992042529574}
   - component: {fileID: -1424027002158506168}
+  - component: {fileID: 8129663380688441853}
   - component: {fileID: 2357698739632281377}
   - component: {fileID: 6916173462951538007}
   m_Layer: 0
@@ -176,12 +177,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 533378072708315792, guid: 0d3904c497a2cb8489108ac099efc9f3, type: 3}
+  m_Sprite: {fileID: -290841225133456328, guid: 803e1ff7f924d884298cd68fa00cced6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.45, y: 0.44}
+  m_Size: {x: 0.87, y: 0.86}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -425,6 +426,22 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &8129663380688441853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409706667929683785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ae8cf8f15445949aa465274eaab772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprite: {fileID: -290841225133456328, guid: 803e1ff7f924d884298cd68fa00cced6, type: 3}
+  myHandSprite: {fileID: -1090508081510449574, guid: 383d41b44043e6547ae89841467388cb, type: 3}
+  otherSprite: {fileID: -6791381353616140895, guid: d06a5358370d49242aaeecf1db820bf6, type: 3}
+  otherHandSprite: {fileID: -5002029198704228752, guid: e46c398d54e87834984f31e4e2aaa887, type: 3}
 --- !u!114 &2357698739632281377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +526,7 @@ GameObject:
   - component: {fileID: 190028770788487812}
   m_Layer: 0
   m_Name: LeftHand
-  m_TagString: Untagged
+  m_TagString: Hand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -573,12 +590,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: -4794096861804161020, guid: abab2aa323e033941af2e091e12e1af0, type: 3}
+  m_Sprite: {fileID: -1090508081510449574, guid: 383d41b44043e6547ae89841467388cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.19, y: 0.19}
+  m_Size: {x: 0.36, y: 0.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -633,7 +650,7 @@ GameObject:
   - component: {fileID: 2765030920388145254}
   m_Layer: 0
   m_Name: RightHand
-  m_TagString: Untagged
+  m_TagString: Hand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -697,12 +714,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: -4794096861804161020, guid: abab2aa323e033941af2e091e12e1af0, type: 3}
+  m_Sprite: {fileID: -1090508081510449574, guid: 383d41b44043e6547ae89841467388cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.19, y: 0.19}
+  m_Size: {x: 0.36, y: 0.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -50,7 +50,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
             Debug.Log("Empty");
             return;
         }
-       
+
         string msg = string.Format("[{0}] {1}", PhotonNetwork.LocalPlayer.NickName, inputField.text + Input.compositionString);
         inputField.text = "";
         if (admin.isAdmin)
@@ -61,7 +61,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel(0); 
+        PhotonNetwork.LoadLevel(0);
     }
 
     void ChatterUpdate()
