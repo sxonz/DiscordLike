@@ -66,7 +66,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     void ChatterUpdate()
     {
-        players = "Âü°¡ÀÚ ¸ñ·Ï\n";
+        players = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½\n";
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -85,7 +85,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        ReceiveMsg($"ÀÌÁ¦ ÀÌÀü ¹æÀåÀº Á×°í <color=yellow>[{newMasterClient.NickName}]ÀÇ ½Ã´ë°¡ µÇ¾ú´Ù.</color>");
+        ReceiveMsg($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½ <color=yellow>[{newMasterClient.NickName}]ï¿½ï¿½ ï¿½Ã´ë°¡ ï¿½Ç¾ï¿½ï¿½ï¿½.</color>");
     }
 
 
@@ -97,19 +97,19 @@ public class ChatManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("¸¶½ºÅÍ Å¬¶óÀÌ¾ðÆ®°¡ ¾Æ´Ô");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½Æ´ï¿½");
         }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        string msg = string.Format("<color=#00ff00>[{0}]´ÔÀÌ {1}¿¡ °« Åº»ýÇÏ¼Ì½À´Ï´Ù.</color>", newPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
+        string msg = string.Format("<color=#00ff00>[{0}]ï¿½ï¿½ï¿½ï¿½ {1}ï¿½ï¿½ ï¿½ï¿½ Åºï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½.</color>", newPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
         ReceiveMsg(msg);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        string msg = string.Format("<color=#ff0000>[{0}]´ÔÀÌ {1}¿¡ »ç¸ÁÇÏ¼Ì½À´Ï´Ù.</color>", otherPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
+        string msg = string.Format("<color=#ff0000>[{0}]ï¿½ï¿½ï¿½ï¿½ {1}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½.</color>", otherPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
         ReceiveMsg(msg);
     }
     public void ToggleReady()

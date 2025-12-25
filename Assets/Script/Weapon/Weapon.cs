@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPun
 {
     public float attackAngle = 90f;
     public float attackDuration = 0.15f;
 
     protected bool isAttacking = false;
 
-    // ±âº» °ø°İ (±ÙÁ¢ È¸Àü)
+    // 
     public virtual void Attack(bool isLeftHand)
     {
         if (isAttacking) return;
@@ -42,9 +43,20 @@ public class Weapon : MonoBehaviour
         isAttacking = false;
     }
 
-    // Æ¯¼ö °ø°İ (¹«±â¸¶´Ù ´Ù¸£°Ô)
+    // 
     public virtual void SpecialAttack()
     {
-        Debug.Log($"{name} Æ¯¼ö °ø°İ (±âº»)");
+        Debug.Log($"{name} Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½âº»)");
+    }
+
+    // ë¬´ê¸° ì§‘ê¸° / ë²„ë¦¬ê¸° ìƒíƒœ ë™ê¸°í™”
+    [PunRPC]
+    public void RPC_SetPicked(bool picked)
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = !picked;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = !picked;
     }
 }

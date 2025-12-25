@@ -3,10 +3,10 @@ using Photon.Pun;
 
 public class Bow : Weapon
 {
-    public string arrowPrefabName = "Arrow"; 
+    public string arrowPrefabName = "Arrow";
     public Transform firePoint;
     public float arrowSpeed = 12f;
-    
+
     public override void SpecialAttack()
     {
         if (!PhotonNetwork.IsConnected)

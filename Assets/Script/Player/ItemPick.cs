@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class ItemPick : MonoBehaviour
 {
@@ -40,10 +41,15 @@ public class ItemPick : MonoBehaviour
     {
         weaponHolder.EquipWeapon(weapon);
 
-        Collider2D col = weapon.GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
-
-        Rigidbody2D rb = weapon.GetComponent<Rigidbody2D>();
-        if (rb != null) rb.simulated = false;
+        Weapon w = weapon.GetComponent<Weapon>();
+        if (w != null)
+        {
+            w.photonView.RPC(
+                "RPC_SetPicked",
+                RpcTarget.All,
+                true
+            );
+        }
     }
+
 }
