@@ -18,15 +18,14 @@ public class WeaponHolder : MonoBehaviourPun
 
     void Update()
     {
-        
+
         if (!photonView.IsMine) return;
-        
-        // 기존 로직 그대로 유지
+
+
         if (Input.GetMouseButtonDown(0) && leftWeapon != null)
         {
             leftWeapon.SpecialAttack();
         }
-
         if (Input.GetMouseButtonDown(1) && rightWeapon != null)
         {
             rightWeapon.SpecialAttack();
@@ -48,11 +47,15 @@ public class WeaponHolder : MonoBehaviourPun
         {
             leftWeapon = weapon;
             targetHand = leftHand;
+            state.isLeftHand = true;
+            state.isRightHand = false;
         }
         else if (rightWeapon == null)
         {
             rightWeapon = weapon;
             targetHand = rightHand;
+            state.isLeftHand = false;
+            state.isRightHand = true;
         }
         else
         {
@@ -63,7 +66,6 @@ public class WeaponHolder : MonoBehaviourPun
         if (handPV == null)
             return false;
 
-        // 여기만 핵심 변경
         pv.RPC(
             "PickWeapon",
             RpcTarget.All,
@@ -90,6 +92,6 @@ public class WeaponHolder : MonoBehaviourPun
 
         weaponTr.SetParent(handTr, false);
         weaponTr.localPosition = Vector3.zero;
-        weaponTr.localRotation = Quaternion.Euler(0, 0, 90);
+        weaponTr.localRotation = Quaternion.Euler(0, 0, 0);
     }
 }

@@ -43,10 +43,10 @@ public class ItemPick : MonoBehaviourPun
     {
         weaponHolder.EquipWeapon(weapon);
 
-        Weapon w = weapon.GetComponent<Weapon>();
-        if (w != null)
+        WeaponNetwork wN = weapon.GetComponent<WeaponNetwork>();
+        if (wN != null)
         {
-            w.photonView.RPC(
+            wN.photonView.RPC(
                 "RPC_SetPicked",
                 RpcTarget.All,
                 true
