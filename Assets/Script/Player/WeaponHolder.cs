@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class WeaponHolder : MonoBehaviour
+public class WeaponHolder : MonoBehaviourPun
 {
     public Transform leftHand;
     public Transform rightHand;
@@ -18,6 +18,9 @@ public class WeaponHolder : MonoBehaviour
 
     void Update()
     {
+        
+        if (!photonView.IsMine) return;
+        
         // 기존 로직 그대로 유지
         if (Input.GetMouseButtonDown(0) && leftWeapon != null)
         {

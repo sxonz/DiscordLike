@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class ItemPick : MonoBehaviour
+public class ItemPick : MonoBehaviourPun
 {
     public WeaponHolder weaponHolder;
 
@@ -24,6 +24,8 @@ public class ItemPick : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         if (currentWeaponCol == null)
             return;
 
