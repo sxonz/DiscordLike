@@ -1,50 +1,19 @@
 using UnityEngine;
-using System.Collections;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPun
 {
-    public float attackAngle = 90f;
-    public float attackDuration = 0.15f;
+    public State state;
+    void Start()
+    {
+        state = GetComponent<State>();
+    }
 
     protected bool isAttacking = false;
 
-    // ±âº» °ø°Ý (±ÙÁ¢ È¸Àü)
-    public virtual void Attack(bool isLeftHand)
-    {
-        if (isAttacking) return;
-        StartCoroutine(AttackCoroutine(isLeftHand));
-    }
-
-    protected IEnumerator AttackCoroutine(bool isLeftHand)
-    {
-        isAttacking = true;
-
-        float elapsed = 0f;
-        float direction = isLeftHand ? 1f : -1f;
-
-        Quaternion startRot = transform.localRotation;
-        Quaternion endRot =
-            startRot * Quaternion.Euler(0, 0, direction * attackAngle);
-
-        while (elapsed < attackDuration)
-        {
-            transform.localRotation = Quaternion.Slerp(
-                startRot,
-                endRot,
-                elapsed / attackDuration
-            );
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.localRotation = startRot;
-        isAttacking = false;
-    }
-
-    // Æ¯¼ö °ø°Ý (¹«±â¸¶´Ù ´Ù¸£°Ô)
+    // 
     public virtual void SpecialAttack()
     {
-        Debug.Log($"{name} Æ¯¼ö °ø°Ý (±âº»)");
+        Debug.Log($"{name} Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½âº»)");
     }
 }

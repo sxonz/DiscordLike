@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3400683709112840009}
   - component: {fileID: 692841526245097679}
   - component: {fileID: -979191286747290942}
+  - component: {fileID: 1203636590741158266}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd05ae96375bfb4398630fc5cf0aff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
 --- !u!61 &692841526245097679
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +196,24 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1203636590741158266}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1203636590741158266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830049309674214627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3

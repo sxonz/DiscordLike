@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4822860684316469313}
   - component: {fileID: -4816519051628179349}
   - component: {fileID: -5180489627830291776}
-  - component: {fileID: 2458391797539664919}
+  - component: {fileID: 8986979878542727918}
+  - component: {fileID: -3020416331988346042}
   - component: {fileID: 3928963610944951566}
   m_Layer: 0
   m_Name: weapon_axe_0
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1101678889018518099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.272, y: 0.075, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -104,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDropped: 1
+  isLeftHand: 0
+  isRightHand: 0
 --- !u!61 &-5180489627830291776
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +141,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07070126, y: 0.2725638}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.7287244, y: 0.045721002}
@@ -148,9 +151,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.27, y: 0.56}
+  m_Size: {x: 0.26874867, y: 0.5605324}
   m_EdgeRadius: 0
---- !u!114 &2458391797539664919
+--- !u!114 &8986979878542727918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,11 +162,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1101678889018518099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662461f07d4db854da1800c7a4384b87, type: 3}
+  m_Script: {fileID: 11500000, guid: be1c555d9152aa042a73b1f5af408d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 0}
   attackAngle: 90
   attackDuration: 0.15
+--- !u!114 &-3020416331988346042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101678889018518099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ca0189995410b47973680348200088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3928963610944951566
 MonoBehaviour:
   m_ObjectHideFlags: 0

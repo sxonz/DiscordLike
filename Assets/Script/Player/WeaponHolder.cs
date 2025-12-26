@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class WeaponHolder : MonoBehaviour
+public class WeaponHolder : MonoBehaviourPun
 {
     public Transform leftHand;
     public Transform rightHand;
@@ -8,15 +9,23 @@ public class WeaponHolder : MonoBehaviour
     private Weapon leftWeapon;
     private Weapon rightWeapon;
 
+    private PhotonView pv;
+
+    void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
     void Update()
     {
-        // 좌클릭 → 왼손 무기 특수 공격
+
+        if (!photonView.IsMine) return;
+
+
         if (Input.GetMouseButtonDown(0) && leftWeapon != null)
         {
             leftWeapon.SpecialAttack();
         }
-
-        // 우클릭 → 오른손 무기 특수 공격
         if (Input.GetMouseButtonDown(1) && rightWeapon != null)
         {
             rightWeapon.SpecialAttack();
@@ -27,35 +36,62 @@ public class WeaponHolder : MonoBehaviour
     {
         Weapon weapon = weaponObj.GetComponent<Weapon>();
         State state = weaponObj.GetComponent<State>();
+        PhotonView weaponPV = weaponObj.GetComponent<PhotonView>();
 
-        if (weapon == null || state == null)
+        if (weapon == null || state == null || weaponPV == null)
             return false;
+
+        Transform targetHand;
 
         if (leftWeapon == null)
         {
-            AttachWeapon(weaponObj, leftHand);
             leftWeapon = weapon;
+            targetHand = leftHand;
+            state.isLeftHand = true;
+            state.isRightHand = false;
         }
         else if (rightWeapon == null)
         {
-            AttachWeapon(weaponObj, rightHand);
             rightWeapon = weapon;
+            targetHand = rightHand;
+            state.isLeftHand = false;
+            state.isRightHand = true;
         }
         else
         {
             return false;
         }
 
+        PhotonView handPV = targetHand.GetComponent<PhotonView>();
+        if (handPV == null)
+            return false;
+
+        pv.RPC(
+            "PickWeapon",
+            RpcTarget.All,
+            weaponPV.ViewID,
+            handPV.ViewID
+        );
+
         state.isDropped = false;
         return true;
     }
-    void AttachWeapon(GameObject weapon, Transform hand)
-    {
-        weapon.transform.SetParent(hand, false);
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
-        // scale 건들지 않음
 
-        weapon.transform.localRotation = Quaternion.Euler(0, 0, 90);
+    // 부모 동기화 전용 RPC
+    [PunRPC]
+    void PickWeapon(int weaponViewID, int handViewID)
+    {
+        PhotonView weaponPV = PhotonView.Find(weaponViewID);
+        PhotonView handPV = PhotonView.Find(handViewID);
+
+        if (weaponPV == null || handPV == null)
+            return;
+
+        Transform weaponTr = weaponPV.transform;
+        Transform handTr = handPV.transform;
+
+        weaponTr.SetParent(handTr, false);
+        weaponTr.localPosition = Vector3.zero;
+        weaponTr.localRotation = Quaternion.Euler(0, 0, 0);
     }
 }

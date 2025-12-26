@@ -7,9 +7,9 @@ public class Move : MonoBehaviourPun
     public float moveSpeed = 3f;
 
     [Header("Dash")]
-    public float dashMultiplier = 3f;   // ´ë½Ã Áß ¼Óµµ ¹è¼ö
-    public float dashDuration = 0.5f;   // ´ë½Ã Áö¼Ó ½Ã°£
-    public float dashCooldown = 3f;     // ÄðÅ¸ÀÓ
+    public float dashMultiplier = 3f;   // ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½
+    public float dashDuration = 0.5f;   // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float dashCooldown = 3f;     // ï¿½ï¿½Å¸ï¿½ï¿½
 
     bool isDashing = false;
     bool canDash = true;
@@ -17,6 +17,7 @@ public class Move : MonoBehaviourPun
     void Update()
     {
         if (!photonView.IsMine) return;
+        
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 

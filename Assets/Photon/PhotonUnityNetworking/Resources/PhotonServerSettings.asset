@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - OnGameRoom
   - ReceiveMsg
+  - PickWeapon
+  - RPC_SetPicked
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
