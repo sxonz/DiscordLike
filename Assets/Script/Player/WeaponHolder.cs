@@ -69,7 +69,9 @@ public class WeaponHolder : MonoBehaviourPun
 
         if (weapon.isbow())
         {
-            angle = 30;
+            if (rightWeapon == weapon)
+                angle = -60;
+            angle += 30;
         }
 
         PhotonView handPV = targetHand.GetComponent<PhotonView>();
