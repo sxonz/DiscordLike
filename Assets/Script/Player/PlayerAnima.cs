@@ -10,8 +10,6 @@ public class PlayerAnima : MonoBehaviourPun
     public Sprite otherSprite;
     public Sprite otherHandSprite;
 
-    public Sprite hit_sprite;
-
     private SpriteRenderer sr;
     private Sprite normalSprite;
 
@@ -22,6 +20,7 @@ public class PlayerAnima : MonoBehaviourPun
         sr = GetComponent<SpriteRenderer>();
 
         bool isMine = photonView.IsMine;
+
         normalSprite = isMine ? mySprite : otherSprite;
         sr.sprite = normalSprite;
 
@@ -48,14 +47,11 @@ public class PlayerAnima : MonoBehaviourPun
     {
         hitTween?.Kill();
 
-        sr.sprite = hit_sprite;
-
         sr.DOFade(0.2f, 0.1f)
           .SetLoops(6, LoopType.Yoyo);
 
         hitTween = DOVirtual.DelayedCall(duration, () =>
         {
-            sr.sprite = normalSprite;
             sr.color = Color.white;
         });
     }

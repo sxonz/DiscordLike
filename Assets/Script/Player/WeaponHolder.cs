@@ -45,6 +45,8 @@ public class WeaponHolder : MonoBehaviourPun
 
         Transform targetHand;
 
+        Vector3 scale = new Vector3(2, 2, 2);
+
         if (leftWeapon == null)
         {
             leftWeapon = weapon;
@@ -58,7 +60,7 @@ public class WeaponHolder : MonoBehaviourPun
             targetHand = rightHand;
             state.isLeftHand = false;
             state.isRightHand = true;
-            weapon.transform.localScale = new Vector3(-2, 2, 2);
+            scale = new Vector3(-2, 2, 2);
         }
         else
         {
@@ -83,7 +85,8 @@ public class WeaponHolder : MonoBehaviourPun
             RpcTarget.All,
             weaponPV.ViewID,
             handPV.ViewID,
-            angle
+            angle,
+            scale
         );
 
         state.isDropped = false;
@@ -92,7 +95,7 @@ public class WeaponHolder : MonoBehaviourPun
 
     // 부모 동기화 전용 RPC
     [PunRPC]
-    void PickWeapon(int weaponViewID, int handViewID, float angle)
+    void PickWeapon(int weaponViewID, int handViewID, float angle, Vector3 scale)
     {
         PhotonView weaponPV = PhotonView.Find(weaponViewID);
         PhotonView handPV = PhotonView.Find(handViewID);
@@ -106,5 +109,6 @@ public class WeaponHolder : MonoBehaviourPun
         weaponTr.SetParent(handTr, false);
         weaponTr.localPosition = Vector3.zero;
         weaponTr.localRotation = Quaternion.Euler(0, 0, angle);
+        weaponTr.localScale = scale;
     }
 }
