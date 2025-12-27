@@ -13,11 +13,8 @@ public class Bow : Weapon
 
     public override void SpecialAttack()
     {
-        if (!PhotonNetwork.IsConnected)
-            return;
-
-        if (isCooldown)
-            return;
+        if (!PhotonNetwork.IsConnected) return;
+        if (isCooldown) return;
 
         Shoot();
         StartCooldown();
@@ -33,12 +30,11 @@ public class Bow : Weapon
 
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         if (rb != null)
-        {
             rb.linearVelocity = firePoint.up * arrowSpeed;
-        }
 
         Arrow arrowComp = arrow.GetComponent<Arrow>();
-        arrowComp.ownerActorNumber = ownerActorNumber;
+        // 안전하게 플레이어 ActorNumber 전달
+        arrowComp.ownerActorNumber = photonView.OwnerActorNr;
     }
 
     void StartCooldown()

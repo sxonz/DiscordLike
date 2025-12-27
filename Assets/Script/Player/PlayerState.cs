@@ -23,15 +23,20 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     public void RPC_Hit(float damage)
     {
-        // 연출은 전원
-        playerAnima.PlayHitEffect(hit_delay);
+        // 1. HP 감소 먼저
+        playerHP -= damage;
 
-        // 판정은 오너만
-        if (!photonView.IsMine)
+        if (playerHP <= 0f)
+        {
+            Die();
             return;
+        }
 
+        // 2. 무적 처리
         if (isInvincible)
             return;
+
+        playerAnima.PlayHitEffect(hit_delay);
 
         isInvincible = true;
 
@@ -40,17 +45,11 @@ public class PlayerState : MonoBehaviourPun
         {
             isInvincible = false;
         });
-
-        playerHP -= damage;
-
-        if (playerHP <= 0f)
-        {
-            Die();
-        }
     }
 
     void Die()
     {
+        GameManager.Instance.OnPlayerEliminated(photonView.Owner);
         PhotonNetwork.Destroy(gameObject);
     }
 

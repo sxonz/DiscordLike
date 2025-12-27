@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
-using DG.Tweening; // [추가] DOTween 사용
+using DG.Tweening;
 
 public class Arrow : MonoBehaviour
 {
@@ -9,14 +9,11 @@ public class Arrow : MonoBehaviour
 
     public float damage = 2;
 
-    PhotonView pv; // [추가] 오너 체크용
-
-    public int ownerActorNumber;
+    public int ownerActorNumber; // 화살을 쏜 플레이어 ActorNumber
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        pv = GetComponent<PhotonView>(); // [추가]
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -25,17 +22,23 @@ public class Arrow : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("화살이 벽에 꽃힘");
             StickAndDisappear();
+            return;
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
             PhotonView playerPV = collision.gameObject.GetComponent<PhotonView>();
-            if (playerPV != null && playerPV.OwnerActorNr == ownerActorNumber)
+            if (playerPV == null) return;
+
+            // 자기 화살은 자신에게 적용하지 않음
+            if (playerPV.OwnerActorNr == ownerActorNumber)
                 return;
 
-            OnPlayerHit(collision.gameObject);
+            // 맞은 플레이어에게 RPC 호출
+            playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
+
+            StickAndDisappear();
         }
     }
 
@@ -43,35 +46,23 @@ public class Arrow : MonoBehaviour
     {
         isStuck = true;
 
-        // 이동 정지
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = false;
 
-        // 충돌 끄기
         GetComponent<Collider2D>().enabled = false;
 
-        // 1.5초 후 사라짐 (DOTween 사용)
-        Debug.Log("화살 1.5초 후 제거");
-
-        DOVirtual.DelayedCall(1.5f, () => // [추가]
+        DOVirtual.DelayedCall(1.5f, () =>
         {
-            PhotonNetwork.Destroy(gameObject); // [수정] 지연 삭제
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.Destroy(gameObject);
+            else
+                Destroy(gameObject);
         });
-    }
-
-    void OnPlayerHit(GameObject player)
-    {
-        PhotonView playerPV = player.GetComponent<PhotonView>();
-        playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
-
-        Debug.Log("화살 바로 제거");
-
-        PhotonNetwork.Destroy(gameObject);
     }
 
     void OnDestroy()
     {
-        DOTween.Kill(gameObject); // [추가] 트윈 정리 (에러 방지)
+        DOTween.Kill(gameObject);
     }
 }
