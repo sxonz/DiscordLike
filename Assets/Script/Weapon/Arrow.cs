@@ -54,8 +54,6 @@ public class Arrow : MonoBehaviour
         // 1.5초 후 사라짐 (DOTween 사용)
         Debug.Log("화살 1.5초 후 제거");
 
-        if (!pv.IsMine) return; // [추가] 오너만 삭제
-
         DOVirtual.DelayedCall(1.5f, () => // [추가]
         {
             PhotonNetwork.Destroy(gameObject); // [수정] 지연 삭제
@@ -65,11 +63,10 @@ public class Arrow : MonoBehaviour
     void OnPlayerHit(GameObject player)
     {
         PhotonView playerPV = player.GetComponent<PhotonView>();
-        playerPV.RPC("RPC_Hit", playerPV.Owner, damage);
+        playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
 
         Debug.Log("화살 바로 제거");
 
-        if (!pv.IsMine) return; // [추가] 오너만 삭제
         PhotonNetwork.Destroy(gameObject);
     }
 

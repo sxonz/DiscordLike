@@ -73,7 +73,7 @@ public class Axe : Weapon
             return;
 
         // 데미지는 RPC로 전달
-        targetPV.RPC("RPC_Hit", targetPV.Owner, damage);
+        targetPV.RPC("RPC_Hit", RpcTarget.All, damage);
     }
 
     void OnDisable()

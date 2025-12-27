@@ -44,6 +44,7 @@ MonoBehaviour:
   - PickWeapon
   - RPC_SetPicked
   - RPC_Hit
+  - RPC_HitEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

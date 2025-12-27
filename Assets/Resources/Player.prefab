@@ -235,7 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6e9be878260a3499b645d018ce6476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PLAYER_MAX_HP: 10
+  PLAYER_MAX_HP: 100
+  hit_delay: 1
 --- !u!114 &1882592665967283404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +335,7 @@ MonoBehaviour:
   myHandSprite: {fileID: -1090508081510449574, guid: 383d41b44043e6547ae89841467388cb, type: 3}
   otherSprite: {fileID: -6791381353616140895, guid: d06a5358370d49242aaeecf1db820bf6, type: 3}
   otherHandSprite: {fileID: -5002029198704228752, guid: e46c398d54e87834984f31e4e2aaa887, type: 3}
+  hit_sprite: {fileID: -59066101396820148, guid: 2019eba61668b1342ba110d96210eee7, type: 3}
 --- !u!114 &2357698739632281377
 MonoBehaviour:
   m_ObjectHideFlags: 0
