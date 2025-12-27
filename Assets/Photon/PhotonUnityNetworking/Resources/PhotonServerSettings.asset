@@ -43,6 +43,7 @@ MonoBehaviour:
   - ReceiveMsg
   - PickWeapon
   - RPC_SetPicked
+  - RPC_Hit
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

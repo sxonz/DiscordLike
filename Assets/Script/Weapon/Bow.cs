@@ -36,6 +36,9 @@ public class Bow : Weapon
         {
             rb.linearVelocity = firePoint.up * arrowSpeed;
         }
+
+        Arrow arrowComp = arrow.GetComponent<Arrow>();
+        arrowComp.ownerActorNumber = ownerActorNumber;
     }
 
     void StartCooldown()

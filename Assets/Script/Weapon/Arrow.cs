@@ -11,6 +11,8 @@ public class Arrow : MonoBehaviour
 
     PhotonView pv; // [추가] 오너 체크용
 
+    public int ownerActorNumber;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,7 +31,10 @@ public class Arrow : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어 맞음");
+            PhotonView playerPV = collision.gameObject.GetComponent<PhotonView>();
+            if (playerPV != null && playerPV.OwnerActorNr == ownerActorNumber)
+                return;
+
             OnPlayerHit(collision.gameObject);
         }
     }
@@ -59,8 +64,8 @@ public class Arrow : MonoBehaviour
 
     void OnPlayerHit(GameObject player)
     {
-        PlayerState playerState = player.GetComponent<PlayerState>();
-        playerState.Hit(damage);
+        PhotonView playerPV = player.GetComponent<PhotonView>();
+        playerPV.RPC("RPC_Hit", playerPV.Owner, damage);
 
         Debug.Log("화살 바로 제거");
 
