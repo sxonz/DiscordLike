@@ -12,10 +12,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PP
   - Water
   - UI
-  - 
+  - volume
   - 
   - 
   - 
@@ -47,3 +47,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  - volume
