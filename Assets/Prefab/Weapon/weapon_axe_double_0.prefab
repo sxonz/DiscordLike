@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDropped: 1
+  isLeftHand: 0
+  isRightHand: 0
 --- !u!61 &5363970793523697545
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -163,8 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662461f07d4db854da1800c7a4384b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAngle: 90
-  attackDuration: 0.15
+  state: {fileID: 0}
 --- !u!50 &-4930585557680538568
 Rigidbody2D:
   serializedVersion: 5
