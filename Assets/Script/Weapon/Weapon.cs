@@ -16,4 +16,9 @@ public class Weapon : MonoBehaviourPun
     {
         Debug.Log($"{name} Ư�� ���� (�⺻)");
     }
+
+    public virtual bool isbow()
+    {
+        return false;
+    }
 }

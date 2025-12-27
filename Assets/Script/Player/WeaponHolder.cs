@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class WeaponHolder : MonoBehaviourPun
 {
@@ -56,10 +58,18 @@ public class WeaponHolder : MonoBehaviourPun
             targetHand = rightHand;
             state.isLeftHand = false;
             state.isRightHand = true;
+            weapon.transform.localScale = new Vector3(-2, 2, 2);
         }
         else
         {
             return false;
+        }
+
+        float angle = 0;
+
+        if (weapon.isbow())
+        {
+            angle = 30;
         }
 
         PhotonView handPV = targetHand.GetComponent<PhotonView>();
@@ -70,7 +80,8 @@ public class WeaponHolder : MonoBehaviourPun
             "PickWeapon",
             RpcTarget.All,
             weaponPV.ViewID,
-            handPV.ViewID
+            handPV.ViewID,
+            angle
         );
 
         state.isDropped = false;
@@ -79,7 +90,7 @@ public class WeaponHolder : MonoBehaviourPun
 
     // 부모 동기화 전용 RPC
     [PunRPC]
-    void PickWeapon(int weaponViewID, int handViewID)
+    void PickWeapon(int weaponViewID, int handViewID, float angle)
     {
         PhotonView weaponPV = PhotonView.Find(weaponViewID);
         PhotonView handPV = PhotonView.Find(handViewID);
@@ -92,6 +103,6 @@ public class WeaponHolder : MonoBehaviourPun
 
         weaponTr.SetParent(handTr, false);
         weaponTr.localPosition = Vector3.zero;
-        weaponTr.localRotation = Quaternion.Euler(0, 0, 0);
+        weaponTr.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }

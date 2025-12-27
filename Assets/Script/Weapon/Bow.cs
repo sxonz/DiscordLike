@@ -24,4 +24,8 @@ public class Bow : Weapon
             rb.linearVelocity = firePoint.up * arrowSpeed;
         }
     }
+    public override bool isbow()
+    {
+        return true;
+    }
 }
