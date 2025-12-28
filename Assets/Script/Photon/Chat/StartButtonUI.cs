@@ -20,7 +20,7 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
     {
         startButton.interactable =
             PhotonNetwork.IsMasterClient &&
-            PhotonNetwork.PlayerList.Length >= 1 &&
+            PhotonNetwork.PlayerList.Length >= 2 &&
             AllPlayersReady();
     }
 
@@ -29,7 +29,7 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (PhotonNetwork.PlayerList.Length < 1)
+        if (PhotonNetwork.PlayerList.Length < 2)
             return;
 
         if (!AllPlayersReady())
