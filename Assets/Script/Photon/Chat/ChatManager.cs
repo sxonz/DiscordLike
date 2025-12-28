@@ -66,7 +66,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
 
     void ChatterUpdate()
     {
-        players = "������ ���\n";
+        players = "참가자 목록\n";
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
@@ -85,7 +85,9 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        ReceiveMsg($"���� ���� ������ �װ� <color=yellow>[{newMasterClient.NickName}]�� �ô밡 �Ǿ���.</color>");
+        ReceiveMsg(
+            $"관리자 권한이 <color=yellow>[{newMasterClient.NickName}]</color>에게 넘어갔습니다."
+        );
     }
 
 
@@ -95,23 +97,30 @@ public class ChatManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("OnGameRoom", RpcTarget.AllBuffered);
         }
-        else
-        {
-            Debug.Log("������ Ŭ���̾�Ʈ�� �ƴ�");
-        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        string msg = string.Format("<color=#00ff00>[{0}]���� {1}�� �� ź���ϼ̽��ϴ�.</color>", newPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
+        string msg = string.Format(
+            "<color=#00ff00>[{0}]이 {1}에 갓 탄생하셨습니다.</color>",
+            newPlayer.NickName,
+            DateTime.Now.ToString("yyyy-MM-dd HH:mm")
+        );
+
         ReceiveMsg(msg);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        string msg = string.Format("<color=#ff0000>[{0}]���� {1}�� ����ϼ̽��ϴ�.</color>", otherPlayer.NickName, DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
+        string msg = string.Format(
+            "<color=#ff0000>[{0}]이 {1}에 죽었습니다.</color>",
+            otherPlayer.NickName,
+            DateTime.Now.ToString("yyyy-MM-dd HH:mm")
+        );
+
         ReceiveMsg(msg);
     }
+
     public void ToggleReady()
     {
         bool isReady = false;

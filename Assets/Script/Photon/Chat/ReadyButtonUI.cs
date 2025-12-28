@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using Unity.Mathematics;
 
 public class ReadyButtonUI : MonoBehaviourPunCallbacks
 {
@@ -29,7 +30,7 @@ public class ReadyButtonUI : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        readyText.text = isReady ? "ÁØºñ ¿Ï·á" : "ÇÃ·¹ÀÌ ÁØºñ";
+        readyText.text = isReady ? "ì¤€ë¹„ ì™„ë£Œ" : "í”Œë ˆì´ ì¤€ë¹„";
     }
 
     public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
