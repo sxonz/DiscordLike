@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // RPC 유지하지만 실제로는 마스터만 LoadLevel
+    // ✅ RPC 유지하지만 실제로는 마스터만 LoadLevel
     [PunRPC]
     void MoveToChat()
     {

@@ -11,6 +11,8 @@ public class Axe : Weapon
     private Tween attackTween;
     private Collider2D axeCollider;
 
+    private bool hasHit; // 추가: 한 번의 공격에서 중복 히트 방지
+
     void Awake()
     {
         axeCollider = GetComponent<Collider2D>();
@@ -27,6 +29,7 @@ public class Axe : Weapon
     private void Attack(bool isLeftHand)
     {
         isAttacking = true;
+        hasHit = false;               // 추가: 공격 시작 시 히트 초기화
         axeCollider.enabled = true;
 
         float direction = isLeftHand ? 1f : -1f;
@@ -50,10 +53,13 @@ public class Axe : Weapon
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        PhotonView arrowPV = GetComponent<PhotonView>();
+        if (!isAttacking) return;     // 추가: 공격 중이 아니면 무시
+        if (hasHit) return;           // 추가: 이미 맞췄으면 무시
 
-        // 판정은 화살 오너만
-        if (!arrowPV.IsMine)
+        PhotonView axePV = GetComponent<PhotonView>(); // 변수명 의미 맞게 사용
+
+        // 판정은 도끼 오너만
+        if (!axePV.IsMine)
             return;
 
         if (collision.gameObject.CompareTag("Player"))
@@ -63,11 +69,13 @@ public class Axe : Weapon
             if (playerPV == null) return;
 
             // 자기 자신 무시
-            if (playerPV.OwnerActorNr == arrowPV.OwnerActorNr)
+            if (playerPV.OwnerActorNr == axePV.OwnerActorNr)
                 return;
 
+            hasHit = true; // 추가: 한 번 맞췄다고 기록
             playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
-            PhotonNetwork.Destroy(gameObject);
+
+            // 수정: 도끼는 파괴하지 않음
         }
     }
 
@@ -78,5 +86,6 @@ public class Axe : Weapon
             axeCollider.enabled = false;
 
         isAttacking = false;
+        hasHit = false; // 추가
     }
 }

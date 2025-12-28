@@ -2,22 +2,23 @@
 using Photon.Pun;
 using DG.Tweening;
 
-public class Arrow : MonoBehaviour
+public class Arrow : MonoBehaviourPun
 {
     Rigidbody2D rb;
     bool isStuck = false;
 
     public float damage = 2f;
 
+    PhotonView arrowPV; // [추가] PhotonView 캐싱
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        arrowPV = GetComponent<PhotonView>(); // [추가]
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        PhotonView arrowPV = GetComponent<PhotonView>();
-
         // 판정은 화살 오너만
         if (!arrowPV.IsMine)
             return;
@@ -27,7 +28,7 @@ public class Arrow : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall"))
         {
-            StickAndDisappear();
+            arrowPV.RPC("RPC_StickAndDisappear", RpcTarget.All); // [수정] RPC로 전파
             return;
         }
 
@@ -42,11 +43,18 @@ public class Arrow : MonoBehaviour
 
         // 이제 자기 자신은 애초에 충돌 안 함 (IgnoreCollision)
         playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
-        PhotonNetwork.Destroy(gameObject);
+        
+        if (photonView.IsMine)
+            PhotonNetwork.Destroy(gameObject);
     }
 
-    void StickAndDisappear()
+    // [추가] 모든 클라이언트에서 실행
+    [PunRPC]
+    void RPC_StickAndDisappear()
     {
+        if (isStuck)
+            return;
+
         isStuck = true;
 
         rb.linearVelocity = Vector2.zero;
@@ -57,10 +65,8 @@ public class Arrow : MonoBehaviour
 
         DOVirtual.DelayedCall(1.5f, () =>
         {
-            if (PhotonNetwork.IsConnected)
-                PhotonNetwork.Destroy(gameObject);
-            else
-                Destroy(gameObject);
+            if (PhotonNetwork.IsConnected && arrowPV.IsMine)
+                PhotonNetwork.Destroy(gameObject); // [중요] 오너만 Destroy
         });
     }
 
