@@ -7,6 +7,8 @@ using ExitGames.Client.Photon;
 public class StartButtonUI : MonoBehaviourPunCallbacks
 {
     public Button startButton;
+    public GameObject gameChoice;
+    public GameChoice choice;
 
     void Start()
     {
@@ -18,7 +20,7 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
     {
         startButton.interactable =
             PhotonNetwork.IsMasterClient &&
-            PhotonNetwork.PlayerList.Length >= 2 &&
+            PhotonNetwork.PlayerList.Length >= 1 &&
             AllPlayersReady();
     }
 
@@ -27,16 +29,22 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (PhotonNetwork.PlayerList.Length < 2)
+        if (PhotonNetwork.PlayerList.Length < 1)
             return;
 
         if (!AllPlayersReady())
             return;
 
+        gameChoice.SetActive(true);
+        choice.Choice(GameCB);
+    }
+    
+    void GameCB(int roomID)
+    {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(roomID);
     }
 
     bool AllPlayersReady()
