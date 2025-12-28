@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5686606424897652650}
   - component: {fileID: 2631487255396736098}
   - component: {fileID: 2653556966539695501}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2357698739632281377}
   - component: {fileID: 6916173462951538007}
   - component: {fileID: -8717995032340814075}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6e9be878260a3499b645d018ce6476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnIndex: -1
   PLAYER_MAX_HP: 10
   hit_delay: 1
 --- !u!114 &1882592665967283404
@@ -356,6 +357,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6916173462951538007}
+  - {fileID: -8717995032340814075}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -400,7 +402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8603297300787312451}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +436,7 @@ GameObject:
   - component: {fileID: 4413887817678544810}
   - component: {fileID: 1195435448843638336}
   - component: {fileID: 190028770788487812}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftHand
   m_TagString: Hand
   m_Icon: {fileID: 0}
@@ -558,7 +560,7 @@ GameObject:
   - component: {fileID: 3869105934970792983}
   - component: {fileID: 4720493394722825168}
   - component: {fileID: 2765030920388145254}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightHand
   m_TagString: Hand
   m_Icon: {fileID: 0}

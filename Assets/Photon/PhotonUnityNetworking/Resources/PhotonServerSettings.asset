@@ -50,6 +50,11 @@ MonoBehaviour:
   - RPC_PlayerDied
   - RPC_ShowWinner
   - RPC_Attack
+  - RPC_SpawnPlayer
+  - RequestSpawnPosition
+  - RPC_SpawnPlayers
+  - RemoveSpawnIndex
+  - SetSpawnIndex
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
