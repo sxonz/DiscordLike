@@ -6,6 +6,8 @@ public class PlayerState : MonoBehaviourPun
 {
     private PlayerAnima playerAnima;
 
+    private WeaponHolder weaponHolder;
+
     public float PLAYER_MAX_HP = 10f;
     private float playerHP;
 
@@ -16,6 +18,8 @@ public class PlayerState : MonoBehaviourPun
 
     void Start()
     {
+        weaponHolder = GetComponent<WeaponHolder>();
+
         playerAnima = GetComponent<PlayerAnima>();
         playerHP = PLAYER_MAX_HP;
     }
@@ -23,7 +27,9 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     public void RPC_Hit(float damage)
     {
-        // 1. HP 감소 먼저
+        if (isInvincible)
+            return; // 무적이면 데미지 무시
+
         playerHP -= damage;
 
         if (playerHP <= 0f)
@@ -32,12 +38,7 @@ public class PlayerState : MonoBehaviourPun
             return;
         }
 
-        // 2. 무적 처리
-        if (isInvincible)
-            return;
-
         playerAnima.PlayHitEffect(hit_delay);
-
         isInvincible = true;
 
         invincibleTween?.Kill();
@@ -47,12 +48,16 @@ public class PlayerState : MonoBehaviourPun
         });
     }
 
+
     void Die()
     {
         GameManager.Instance.OnPlayerEliminated(photonView.Owner);
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+            weaponHolder.die();
+        }
     }
-
     void OnDestroy()
     {
         invincibleTween?.Kill();

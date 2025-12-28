@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   attackAngle: 90
-  attackDuration: 0.15
+  attackDuration: 0.25
   damage: 3
 --- !u!114 &-3020416331988346042
 MonoBehaviour:

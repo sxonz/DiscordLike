@@ -51,6 +51,11 @@ public class WeaponHolder : MonoBehaviourPun
 
         Transform targetHand;
         Vector3 scale = new Vector3(2, 2, 2);
+        float angle = 0;
+        if (weapon.isbow())
+        {
+            angle = 30;
+        }
 
         if (leftWeapon == null)
         {
@@ -66,6 +71,7 @@ public class WeaponHolder : MonoBehaviourPun
             state.isLeftHand = false;
             state.isRightHand = true;
             scale = new Vector3(-2, 2, 2);
+            angle = -angle;
         }
         else
         {
@@ -81,7 +87,7 @@ public class WeaponHolder : MonoBehaviourPun
             RpcTarget.All,
             weaponPV.ViewID,
             handPV.ViewID,
-            0f,
+            angle,
             scale
         );
 
@@ -107,5 +113,17 @@ public class WeaponHolder : MonoBehaviourPun
         weaponTr.localPosition = Vector3.zero;
         weaponTr.localRotation = Quaternion.Euler(0, 0, angle);
         weaponTr.localScale = scale;
+    }
+
+    public void die()
+    {
+        if (leftWeapon != null)
+        {
+            PhotonNetwork.Destroy(leftWeapon.gameObject);
+        }
+        if (rightWeapon != null)
+        {
+            PhotonNetwork.Destroy(rightWeapon.gameObject);
+        }
     }
 }

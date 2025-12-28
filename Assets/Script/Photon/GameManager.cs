@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.Tilemaps; // Tilemap 사용
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         foreach (var p in PhotonNetwork.PlayerList)
             alivePlayers.Add(p);
 
-        // Tilemap 투명화 바로 시작
+
         FadeTilemap();
     }
 
@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
-
     void FadeTilemap()
     {
         if (tilemap == null) return;
