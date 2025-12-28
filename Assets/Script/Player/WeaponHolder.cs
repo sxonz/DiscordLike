@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class WeaponHolder : MonoBehaviourPun
 {
@@ -41,7 +43,14 @@ public class WeaponHolder : MonoBehaviourPun
         if (weapon == null || state == null || weaponPV == null)
             return false;
 
+        // ★ 핵심: 무기 소유권을 이 플레이어에게 이전
+        if (!weaponPV.IsMine)
+        {
+            weaponPV.TransferOwnership(photonView.Owner);
+        }
+
         Transform targetHand;
+        Vector3 scale = new Vector3(2, 2, 2);
 
         if (leftWeapon == null)
         {
@@ -56,6 +65,7 @@ public class WeaponHolder : MonoBehaviourPun
             targetHand = rightHand;
             state.isLeftHand = false;
             state.isRightHand = true;
+            scale = new Vector3(-2, 2, 2);
         }
         else
         {
@@ -66,20 +76,23 @@ public class WeaponHolder : MonoBehaviourPun
         if (handPV == null)
             return false;
 
-        pv.RPC(
+        photonView.RPC(
             "PickWeapon",
             RpcTarget.All,
             weaponPV.ViewID,
-            handPV.ViewID
+            handPV.ViewID,
+            0f,
+            scale
         );
 
         state.isDropped = false;
         return true;
     }
 
+
     // 부모 동기화 전용 RPC
     [PunRPC]
-    void PickWeapon(int weaponViewID, int handViewID)
+    void PickWeapon(int weaponViewID, int handViewID, float angle, Vector3 scale)
     {
         PhotonView weaponPV = PhotonView.Find(weaponViewID);
         PhotonView handPV = PhotonView.Find(handViewID);
@@ -92,6 +105,7 @@ public class WeaponHolder : MonoBehaviourPun
 
         weaponTr.SetParent(handTr, false);
         weaponTr.localPosition = Vector3.zero;
-        weaponTr.localRotation = Quaternion.Euler(0, 0, 0);
+        weaponTr.localRotation = Quaternion.Euler(0, 0, angle);
+        weaponTr.localScale = scale;
     }
 }

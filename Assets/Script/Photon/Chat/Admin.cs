@@ -8,53 +8,53 @@ public class Admin : MonoBehaviourPunCallbacks
     public ChatManager cm;
     public bool IsAdmin()
     {
-        #if UNITY_EDITOR
-            return isAdmin;
-        #else
+#if UNITY_EDITOR
+        return isAdmin;
+#else
             return false;
-        #endif
+#endif
     }
     private void Start()
     {
         me = PhotonNetwork.LocalPlayer;
     }
-    [SerializeField]bool bef = false;
+    [SerializeField] bool bef = false;
     private void Update()
     {
         if (!bef && isAdmin)
         {
-            bef = isAdmin;
-            string msg = string.Format("<color=#0000FF>[{0}]</color>´ÔÀÌ <color=#00FFFF>°ü¸®ÀÚ°¡ µÇ¾ú½À´Ï´Ù!!</color>", me.NickName);
+            bef = true;
+
+            string msg = string.Format(
+                "<color=#00FF00>ê´€ë¦¬ì ê¶Œí•œì´ </color><color=yellow>[{0}]</color><color=#00FF00>ì—ê²Œ ë¶€ì—¬ë˜ì—ˆìŠµë‹ˆë‹¤.</color>",
+                me.NickName
+            );
 
             cm.photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
             cm.ReceiveMsg(msg);
         }
-        else if(bef && !isAdmin)
+        else if (bef && !isAdmin)
         {
-            bef = isAdmin;
-            string msg = string.Format("[{0}] ´ÔÀÌ<color=#FF0000> ÁË¼ö°¡ µÇ¾ú½À´Ï´Ù.</color>", me.NickName);
+            bef = false;
+
+            string msg = string.Format(
+                "<color=#FF5555>[{0}]ì˜ ê´€ë¦¬ì ê¶Œí•œì´ í•´ì œë˜ì—ˆìŠµë‹ˆë‹¤.</color>",
+                me.NickName
+            );
+
             cm.photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
             cm.ReceiveMsg(msg);
         }
     }
+
     public void Oper(string msg)
     {
         switch (msg[0])
         {
             case 'm':
-                cm.photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered,msg.Substring(1));
+                cm.photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg.Substring(1));
                 break;
         }
-        
-    }
-    void Kick(string name)
-    {
-        foreach(Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.NickName == name)
-            {
-                
-            }
-        }
+
     }
 }

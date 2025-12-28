@@ -17,7 +17,7 @@ public class Move : MonoBehaviourPun
     void Update()
     {
         if (!photonView.IsMine) return;
-        
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 

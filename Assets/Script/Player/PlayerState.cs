@@ -1,26 +1,60 @@
 using UnityEngine;
+using Photon.Pun;
+using DG.Tweening;
 
-public class PlayerState : MonoBehaviour
+public class PlayerState : MonoBehaviourPun
 {
-    public float PLAYER_MAX_HP = 10;
-    float playerHP;
+    private PlayerAnima playerAnima;
+
+    public float PLAYER_MAX_HP = 10f;
+    private float playerHP;
+
+    public float hit_delay = 1.0f;
+
+    private bool isInvincible = false;
+    private Tween invincibleTween;
 
     void Start()
     {
+        playerAnima = GetComponent<PlayerAnima>();
         playerHP = PLAYER_MAX_HP;
     }
 
-    public void Hit(float damage)
+    [PunRPC]
+    public void RPC_Hit(float damage)
     {
+        // 1. HP 감소 먼저
         playerHP -= damage;
-        if (playerHP <= 0)
+
+        if (playerHP <= 0f)
         {
-            Debug.Log("플레이어 사망");
-            die();
+            Die();
+            return;
         }
+
+        // 2. 무적 처리
+        if (isInvincible)
+            return;
+
+        playerAnima.PlayHitEffect(hit_delay);
+
+        isInvincible = true;
+
+        invincibleTween?.Kill();
+        invincibleTween = DOVirtual.DelayedCall(hit_delay, () =>
+        {
+            isInvincible = false;
+        });
     }
-    void die()
+
+    void Die()
     {
-        Destroy(gameObject);
+        GameManager.Instance.OnPlayerEliminated(photonView.Owner);
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        invincibleTween?.Kill();
     }
 }

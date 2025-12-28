@@ -16,12 +16,18 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
 
     void UpdateButton()
     {
-        startButton.interactable = PhotonNetwork.IsMasterClient;
+        startButton.interactable =
+            PhotonNetwork.IsMasterClient &&
+            PhotonNetwork.PlayerList.Length >= 2 &&
+            AllPlayersReady();
     }
 
     void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        if (PhotonNetwork.PlayerList.Length < 2)
             return;
 
         if (!AllPlayersReady())
@@ -41,6 +47,22 @@ public class StartButtonUI : MonoBehaviourPunCallbacks
                 return false;
         }
         return true;
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("Ready"))
+            UpdateButton();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        UpdateButton();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdateButton();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
