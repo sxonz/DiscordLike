@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private float moveToChatDelay = 3f;
     private bool gameEnded = false;
 
+    public Tilemap tilemap;          // Inspector에서 할당
+    public float fadeDuration = 2f;  // 투명화 시간
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         foreach (var p in PhotonNetwork.PlayerList)
             alivePlayers.Add(p);
+
+
+        FadeTilemap();
     }
 
     void SpawnPlayer()
@@ -77,6 +83,21 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }).SetUpdate(true);
             }
         }
+    }
+    void FadeTilemap()
+    {
+        if (tilemap == null) return;
+
+        Color startColor = tilemap.color;
+        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+        // DOTween.To 사용
+        DOTween.To(
+            () => tilemap.color,      // 현재 값 가져오기
+            x => tilemap.color = x,   // 값 적용
+            endColor,                 // 목표 값
+            fadeDuration              // 시간
+        );
     }
 
     [PunRPC]
