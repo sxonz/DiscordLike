@@ -18,10 +18,6 @@ public class Axe : Weapon
 
     public override void SpecialAttack()
     {
-        // 공격은 오너만 수행
-        if (!photonView.IsMine)
-            return;
-
         if (isAttacking)
             return;
 
@@ -52,28 +48,27 @@ public class Axe : Weapon
             });
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        // 판정은 반드시 오너만
-        if (!photonView.IsMine)
+        PhotonView arrowPV = GetComponent<PhotonView>();
+
+        // 판정은 화살 오너만
+        if (!arrowPV.IsMine)
             return;
 
-        if (!isAttacking)
-            return;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PhotonView playerPV =
+                collision.gameObject.GetComponent<PhotonView>();
+            if (playerPV == null) return;
 
-        if (!other.CompareTag("Player"))
-            return;
+            // 자기 자신 무시
+            if (playerPV.OwnerActorNr == arrowPV.OwnerActorNr)
+                return;
 
-        PhotonView targetPV = other.GetComponent<PhotonView>();
-        if (targetPV == null)
-            return;
-
-        // 자기 자신 공격 방지
-        if (targetPV.OwnerActorNr == photonView.OwnerActorNr)
-            return;
-
-        // 데미지는 RPC로 전달
-        targetPV.RPC("RPC_Hit", RpcTarget.All, damage);
+            playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
     void OnDisable()

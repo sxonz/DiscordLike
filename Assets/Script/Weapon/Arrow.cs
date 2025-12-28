@@ -1,5 +1,5 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
+using Photon.Pun;
 using DG.Tweening;
 
 public class Arrow : MonoBehaviour
@@ -7,9 +7,7 @@ public class Arrow : MonoBehaviour
     Rigidbody2D rb;
     bool isStuck = false;
 
-    public float damage = 2;
-
-    public int ownerActorNumber; // 화살을 쏜 플레이어 ActorNumber
+    public float damage = 2f;
 
     void Awake()
     {
@@ -18,7 +16,14 @@ public class Arrow : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isStuck) return;
+        PhotonView arrowPV = GetComponent<PhotonView>();
+
+        // 판정은 화살 오너만
+        if (!arrowPV.IsMine)
+            return;
+
+        if (isStuck)
+            return;
 
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -26,20 +31,18 @@ public class Arrow : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            PhotonView playerPV = collision.gameObject.GetComponent<PhotonView>();
-            if (playerPV == null) return;
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
 
-            // 자기 화살은 자신에게 적용하지 않음
-            if (playerPV.OwnerActorNr == ownerActorNumber)
-                return;
+        PhotonView playerPV =
+            collision.gameObject.GetComponentInParent<PhotonView>();
 
-            // 맞은 플레이어에게 RPC 호출
-            playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
+        if (playerPV == null)
+            return;
 
-            StickAndDisappear();
-        }
+        // 이제 자기 자신은 애초에 충돌 안 함 (IgnoreCollision)
+        playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     void StickAndDisappear()
