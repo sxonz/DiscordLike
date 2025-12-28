@@ -3,14 +3,17 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;
 
     public TextMeshProUGUI winnerTXT;
-
     private List<Player> alivePlayers = new List<Player>();
+
+    [SerializeField] private float moveToChatDelay = 3f;
+    private bool gameEnded = false;
 
     void Awake()
     {
@@ -24,11 +27,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         SpawnPlayer();
 
-        // 방에 있는 플레이어 모두 등록
         foreach (var p in PhotonNetwork.PlayerList)
-        {
             alivePlayers.Add(p);
-        }
     }
 
     void SpawnPlayer()
@@ -39,24 +39,37 @@ public class GameManager : MonoBehaviourPunCallbacks
             0
         );
 
-        PhotonNetwork.Instantiate(
-            "Player",
-            spawnPos,
-            Quaternion.identity
-        );
+        PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
     }
 
-    // 플레이어가 탈락했을 때 호출
     public void OnPlayerEliminated(Player eliminatedPlayer)
     {
-        // 리스트에서 제거
+        if (gameEnded) return;
+
         alivePlayers.Remove(eliminatedPlayer);
 
-        // 남은 플레이어가 1명일 때 승리 처리
         if (alivePlayers.Count == 1)
         {
+            gameEnded = true;
+
             Player winner = alivePlayers[0];
             winnerTXT.text = winner.NickName + " 승리!";
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                DOVirtual.DelayedCall(moveToChatDelay, () =>
+                {
+                    MoveToChat(); // RPC 말고 직접 호출
+                }).SetUpdate(true);
+            }
         }
+    }
+
+    // RPC 유지하지만 실제로는 마스터만 LoadLevel
+    [PunRPC]
+    void MoveToChat()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        PhotonNetwork.LoadLevel(1);
     }
 }

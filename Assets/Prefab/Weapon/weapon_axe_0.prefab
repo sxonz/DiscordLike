@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: {fileID: 0}
-  attackAngle: 159.2
+  attackAngle: 90
   attackDuration: 0.15
   damage: 3
 --- !u!114 &-3020416331988346042
@@ -202,6 +202,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -6098200790023328591}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

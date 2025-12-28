@@ -45,6 +45,7 @@ MonoBehaviour:
   - RPC_SetPicked
   - RPC_Hit
   - RPC_HitEffect
+  - MoveToChat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -202,7 +202,7 @@ MonoBehaviour:
   arrowPrefabName: Arrow
   firePoint: {fileID: 5379635286738332164}
   arrowSpeed: 12
-  shootingDelay: 0
+  shootingDelay: 0.5
 --- !u!114 &-2382436156294259276
 MonoBehaviour:
   m_ObjectHideFlags: 0
