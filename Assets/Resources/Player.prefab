@@ -236,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6e9be878260a3499b645d018ce6476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIndex: -1
   PLAYER_MAX_HP: 10
   hit_delay: 1
 --- !u!114 &1882592665967283404
