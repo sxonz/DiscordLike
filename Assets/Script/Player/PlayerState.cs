@@ -6,6 +6,8 @@ public class PlayerState : MonoBehaviourPun
 {
     private PlayerAnima playerAnima;
 
+    private WeaponHolder weaponHolder;
+
     public float PLAYER_MAX_HP = 10f;
     private float playerHP;
 
@@ -16,6 +18,8 @@ public class PlayerState : MonoBehaviourPun
 
     void Start()
     {
+        weaponHolder = GetComponent<WeaponHolder>();
+
         playerAnima = GetComponent<PlayerAnima>();
         playerHP = PLAYER_MAX_HP;
     }
@@ -50,9 +54,12 @@ public class PlayerState : MonoBehaviourPun
     void Die()
     {
         GameManager.Instance.OnPlayerEliminated(photonView.Owner);
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+            weaponHolder.die();
+        }
     }
-
     void OnDestroy()
     {
         invincibleTween?.Kill();
