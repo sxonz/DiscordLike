@@ -43,8 +43,13 @@ public class WeaponHolder : MonoBehaviourPun
         if (weapon == null || state == null || weaponPV == null)
             return false;
 
-        Transform targetHand;
+        // ★ 핵심: 무기 소유권을 이 플레이어에게 이전
+        if (!weaponPV.IsMine)
+        {
+            weaponPV.TransferOwnership(photonView.Owner);
+        }
 
+        Transform targetHand;
         Vector3 scale = new Vector3(2, 2, 2);
 
         if (leftWeapon == null)
@@ -67,31 +72,23 @@ public class WeaponHolder : MonoBehaviourPun
             return false;
         }
 
-        float angle = 0;
-
-        if (weapon.isbow())
-        {
-            if (rightWeapon == weapon)
-                angle = -60;
-            angle += 30;
-        }
-
         PhotonView handPV = targetHand.GetComponent<PhotonView>();
         if (handPV == null)
             return false;
 
-        pv.RPC(
+        photonView.RPC(
             "PickWeapon",
             RpcTarget.All,
             weaponPV.ViewID,
             handPV.ViewID,
-            angle,
+            0f,
             scale
         );
 
         state.isDropped = false;
         return true;
     }
+
 
     // 부모 동기화 전용 RPC
     [PunRPC]

@@ -11,81 +11,97 @@ public class Axe : Weapon
     private Tween attackTween;
     private Collider2D axeCollider;
 
-    private bool hasHit; // 추가: 한 번의 공격에서 중복 히트 방지
+    // 공격 기준 회전 (절대 변하지 않음)
+    private Quaternion baseLocalRotation;
 
     void Awake()
     {
         axeCollider = GetComponent<Collider2D>();
+
+        // 바닥에 있을 때 기준 회전 저장
+        baseLocalRotation = transform.localRotation;
+
+        // 처음에는 바닥에 있으므로 콜라이더 켜둠
+        axeCollider.enabled = true;
     }
 
     public override void SpecialAttack()
     {
+        // 입력 차단 (로컬)
         if (isAttacking)
             return;
 
-        Attack(state.isLeftHand);
+        // 공격 시작을 모든 클라이언트에 동기화
+        photonView.RPC(
+            nameof(RPC_Attack),
+            RpcTarget.All,
+            state.isLeftHand
+        );
+    }
+
+    [PunRPC]
+    void RPC_Attack(bool isLeftHand)
+    {
+        // RPC 수신 측에서도 반드시 차단
+        if (isAttacking)
+            return;
+
+        Attack(isLeftHand);
     }
 
     private void Attack(bool isLeftHand)
     {
         isAttacking = true;
-        hasHit = false;               // 추가: 공격 시작 시 히트 초기화
         axeCollider.enabled = true;
 
         float direction = isLeftHand ? 1f : -1f;
 
-        Quaternion startRot = transform.localRotation;
+        Quaternion startRot = baseLocalRotation;
         Quaternion endRot =
-            startRot * Quaternion.Euler(0f, 0f, direction * attackAngle);
+            baseLocalRotation * Quaternion.Euler(0f, 0f, direction * attackAngle);
 
+        // 누적 방지
         attackTween?.Kill();
+        transform.localRotation = startRot;
 
         attackTween = transform
             .DOLocalRotateQuaternion(endRot, attackDuration)
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-                transform.localRotation = startRot;
+                transform.localRotation = baseLocalRotation;
                 axeCollider.enabled = false;
                 isAttacking = false;
             });
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isAttacking) return;     // 추가: 공격 중이 아니면 무시
-        if (hasHit) return;           // 추가: 이미 맞췄으면 무시
-
-        PhotonView axePV = GetComponent<PhotonView>(); // 변수명 의미 맞게 사용
-
-        // 판정은 도끼 오너만
-        if (!axePV.IsMine)
+        // 판정은 오너만 수행
+        if (!photonView.IsMine)
             return;
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            PhotonView playerPV =
-                collision.gameObject.GetComponent<PhotonView>();
-            if (playerPV == null) return;
+        if (!isAttacking)
+            return;
 
-            // 자기 자신 무시
-            if (playerPV.OwnerActorNr == axePV.OwnerActorNr)
-                return;
+        if (!other.CompareTag("Player"))
+            return;
 
-            hasHit = true; // 추가: 한 번 맞췄다고 기록
-            playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
+        PhotonView targetPV = other.GetComponent<PhotonView>();
+        if (targetPV == null)
+            return;
 
-            // 수정: 도끼는 파괴하지 않음
-        }
+        // 자기 자신 공격 방지
+        if (targetPV.OwnerActorNr == photonView.OwnerActorNr)
+            return;
+
+        targetPV.RPC("RPC_Hit", RpcTarget.All, damage);
     }
 
     void OnDisable()
     {
         attackTween?.Kill();
-        if (axeCollider != null)
-            axeCollider.enabled = false;
-
+        axeCollider.enabled = false;
         isAttacking = false;
-        hasHit = false; // 추가
     }
 }
