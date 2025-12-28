@@ -10,8 +10,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager Instance;
 
     public TextMeshProUGUI winnerTXT;
-    private List<Player> alivePlayers = new List<Player>();
 
+    [Header("스폰 포인트 배열 (Vector3)")]
+    public Vector3[] spawnPositions; // 인스펙터에서 위치 지정
+
+    private List<Player> alivePlayers = new List<Player>();
+    private static List<Vector3> availableSpawnPositions = new List<Vector3>();
     [SerializeField] private float moveToChatDelay = 3f;
     private bool gameEnded = false;
 
@@ -25,6 +29,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        // 사용 가능한 스폰 위치 초기화
+        availableSpawnPositions = new List<Vector3>(spawnPositions);
+
         SpawnPlayer();
 
         foreach (var p in PhotonNetwork.PlayerList)
@@ -33,11 +40,18 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SpawnPlayer()
     {
-        Vector3 spawnPos = new Vector3(
-            Random.Range(-4f, 4f),
-            Random.Range(-2f, 2f),
-            0
-        );
+        if (availableSpawnPositions.Count == 0)
+        {
+            Debug.LogError("모든 스폰 포인트가 사용되었습니다!");
+            return;
+        }
+
+        // 랜덤한 위치 선택
+        int index = Random.Range(0, availableSpawnPositions.Count);
+        Vector3 spawnPos = availableSpawnPositions[index];
+
+        // 선택한 위치 제거
+        availableSpawnPositions.RemoveAt(index);
 
         PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
     }
@@ -59,13 +73,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 DOVirtual.DelayedCall(moveToChatDelay, () =>
                 {
-                    MoveToChat(); // RPC 말고 직접 호출
+                    MoveToChat();
                 }).SetUpdate(true);
             }
         }
     }
 
-    // ✅ RPC 유지하지만 실제로는 마스터만 LoadLevel
     [PunRPC]
     void MoveToChat()
     {
