@@ -1954,6 +1954,8 @@ MonoBehaviour:
   tilemap: {fileID: 2027815117}
   fadeDuration: 2
   moveToChatDelay: 3
+  tilemap: {fileID: 2027815117}
+  fadeDuration: 2
 --- !u!4 &1003500512
 Transform:
   m_ObjectHideFlags: 0
