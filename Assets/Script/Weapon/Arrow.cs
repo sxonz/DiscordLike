@@ -42,6 +42,8 @@ public class Arrow : MonoBehaviourPun
             return;
 
         // 이제 자기 자신은 애초에 충돌 안 함 (IgnoreCollision)
+        Rigidbody2D player_rb = collision.gameObject.GetComponent<Rigidbody2D>();
+        player_rb.linearVelocity = Vector3.zero;
         playerPV.RPC("RPC_Hit", RpcTarget.All, damage);
         
         if (photonView.IsMine)
