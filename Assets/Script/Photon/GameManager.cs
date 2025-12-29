@@ -62,13 +62,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             Player winner = alivePlayers[0];
             winnerTXT.text = winner.NickName + " 승리!";
 
-            if (PhotonNetwork.IsMasterClient)
-            {
                 DOVirtual.DelayedCall(moveToChatDelay, () =>
                 {
                     MoveToChat();
                 }).SetUpdate(true);
-            }
+            
         }
     }
     void FadeTilemap()
