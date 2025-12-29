@@ -16,8 +16,11 @@ public class PlayerState : MonoBehaviourPun
     private bool isInvincible = false;
     private Tween invincibleTween;
 
+    private Rigidbody2D rb;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         weaponHolder = GetComponent<WeaponHolder>();
 
         playerAnima = GetComponent<PlayerAnima>();
@@ -27,6 +30,7 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     public void RPC_Hit(float damage)
     {
+        rb.linearVelocity = Vector3.zero;
         if (isInvincible)
             return; // 무적이면 데미지 무시
 
