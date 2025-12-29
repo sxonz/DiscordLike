@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
-        Screen.SetResolution(1600, 900, false);
     }
 
     void Start()
@@ -92,7 +90,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void MoveToChat()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         PhotonNetwork.LoadLevel(1);
     }
 }
