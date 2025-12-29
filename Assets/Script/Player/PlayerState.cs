@@ -66,4 +66,9 @@ public class PlayerState : MonoBehaviourPun
     {
         invincibleTween?.Kill();
     }
+
+    public float GetHpRatio() // getter
+    {
+        return playerHP / PLAYER_MAX_HP;
+    }
 }
